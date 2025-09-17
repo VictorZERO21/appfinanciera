@@ -6,6 +6,7 @@ import com.upc.appfinanciera.interfaces.IGestionFinancieraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -31,6 +32,16 @@ public class GestionFinancieraService implements IGestionFinancieraService {
     @Override
     public List<GestionFinanciera> buscarPorCliente(String dniCliente) {
         return gestionFinancieraRepositorio.findByDniCliente(dniCliente);
+    }
+
+    @Override
+    public List<Object[]> reportePorTipo(String tipo) {
+        return List.of();
+    }
+
+    @Override
+    public List<Object[]> reportePorFecha(LocalDate fecha) {
+        return List.of();
     }
 
     @Override

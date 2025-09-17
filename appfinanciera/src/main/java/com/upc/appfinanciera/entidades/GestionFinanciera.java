@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -21,6 +23,8 @@ public class GestionFinanciera {
     private String tipo;
 
     private double monto;
+
+    private LocalDate fecha;
 
     private String dniCliente;
 }

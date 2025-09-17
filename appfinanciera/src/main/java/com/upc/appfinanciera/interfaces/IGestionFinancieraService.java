@@ -2,6 +2,8 @@ package com.upc.appfinanciera.interfaces;
 
 import com.upc.appfinanciera.entidades.Cliente;
 import com.upc.appfinanciera.entidades.GestionFinanciera;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IGestionFinancieraService {
@@ -10,4 +12,6 @@ public interface IGestionFinancieraService {
     public void eliminar(Long id);
     public List<GestionFinanciera> buscarPorCliente(String dniCliente);
     public List<GestionFinanciera> buscarTodos();
+    public List<Object[]> reportePorTipo(String tipo);
+    public List<Object[]> reportePorFecha(LocalDate fecha);
 }
