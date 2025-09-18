@@ -4,5 +4,5 @@ import com.upc.appfinanciera.entidades.AsesorFinanciero;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AsesorRepositorio extends JpaRepository<AsesorFinanciero, Long> {
-    public AsesorFinanciero findByDni(String dni);
+    AsesorFinanciero findByDni(String dni);
 }

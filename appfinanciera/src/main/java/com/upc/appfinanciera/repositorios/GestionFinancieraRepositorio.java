@@ -8,7 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface GestionFinancieraRepositorio extends JpaRepository<GestionFinanciera, Long> {
-    public List<GestionFinanciera> findByDniCliente(String dniCliente);
+    // Cambiar a la propiedad correcta
+    public List<GestionFinanciera> findByClienteDni(String dniCliente); // Usar cliente.dni en lugar de dniCliente
     // Montos por título dentro de un tipo (Ingreso/Egreso)
     @Query("""
            SELECT g.titulo, COALESCE(SUM(g.monto),0)

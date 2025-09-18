@@ -1,17 +1,15 @@
 package com.upc.appfinanciera.interfaces;
 
-import com.upc.appfinanciera.entidades.Cliente;
-import com.upc.appfinanciera.entidades.GestionFinanciera;
-
+import com.upc.appfinanciera.dto.GestionFinancieraDTO;
 import java.time.LocalDate;
 import java.util.List;
 
 public interface IGestionFinancieraService {
-    public GestionFinanciera insertar(GestionFinanciera gestionFinanciera);
-    public GestionFinanciera actualizar(GestionFinanciera gestionFinanciera);
+    public GestionFinancieraDTO insertar(GestionFinancieraDTO gestionFinanciera);
+    public GestionFinancieraDTO actualizar(GestionFinancieraDTO gestionFinanciera);
     public void eliminar(Long id);
-    public List<GestionFinanciera> buscarPorCliente(String dniCliente);
-    public List<GestionFinanciera> buscarTodos();
+    public List<GestionFinancieraDTO> buscarPorCliente(String dniCliente);
+    public List<GestionFinancieraDTO> buscarTodos();
     public List<Object[]> reportePorTipo(String tipo);
     public List<Object[]> reportePorFecha(LocalDate fecha);
 }

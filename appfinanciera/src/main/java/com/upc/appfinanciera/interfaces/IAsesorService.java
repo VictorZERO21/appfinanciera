@@ -1,12 +1,12 @@
 package com.upc.appfinanciera.interfaces;
 
-import com.upc.appfinanciera.entidades.AsesorFinanciero;
+import com.upc.appfinanciera.dto.AsesorFinancieroDTO;
 import java.util.List;
 
 public interface IAsesorService {
-    public AsesorFinanciero insertar(AsesorFinanciero asesor);
-    public AsesorFinanciero actualizar(AsesorFinanciero asesor);
+    public AsesorFinancieroDTO insertar(AsesorFinancieroDTO asesor);
+    public AsesorFinancieroDTO actualizar(AsesorFinancieroDTO asesor);
     public void eliminar(String dni);
-    public AsesorFinanciero buscarPorDni(String dni);
-    public List<AsesorFinanciero> buscarTodos();
+    public AsesorFinancieroDTO buscarPorDni(String dni);
+    public List<AsesorFinancieroDTO> buscarTodos();
 }

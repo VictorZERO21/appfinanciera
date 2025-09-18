@@ -12,15 +12,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Consejo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idConsejo;
 
     private String titulo;
-
-    @Column(length = 500)
     private String contenido;
 
-    private String dniCliente;
-    private String dniAsesor;
+    @ManyToOne(fetch = FetchType.LAZY)  // Relación con AsesorFinanciero
+    @JoinColumn(name = "dni_asesor")   // Este es el campo que almacena el dni del asesor
+    private AsesorFinanciero asesorFinanciero;
+
+    // Relación con Cliente
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dni_cliente")
+    private Cliente cliente;
+
+    // Getters, setters y demás
 }
+

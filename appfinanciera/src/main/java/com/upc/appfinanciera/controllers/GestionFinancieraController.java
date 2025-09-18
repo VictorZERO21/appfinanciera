@@ -1,6 +1,6 @@
 package com.upc.appfinanciera.controllers;
 
-import com.upc.appfinanciera.entidades.GestionFinanciera;
+import com.upc.appfinanciera.dto.GestionFinancieraDTO;
 import com.upc.appfinanciera.servicios.GestionFinancieraService;
 import com.upc.appfinanciera.servicios.ReporteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,37 +23,41 @@ public class GestionFinancieraController {
 
 
     @PostMapping
-    public GestionFinanciera insertar(@RequestBody GestionFinanciera gestionFinanciera) {
-        return gestionFinancieraService.insertar(gestionFinanciera);
+    public GestionFinancieraDTO insertar(@RequestBody GestionFinancieraDTO gestionFinancieraDto) {
+        return gestionFinancieraService.insertar(gestionFinancieraDto);
     }
 
+
     @GetMapping
-    public List<GestionFinanciera> buscarTodos() {
+    public List<GestionFinancieraDTO> buscarTodos() {
         return gestionFinancieraService.buscarTodos();
     }
 
+
     @GetMapping("/{dniCliente}")
-    public List<GestionFinanciera> buscarPorCliente(@PathVariable String dniCliente) {
+    public List<GestionFinancieraDTO> buscarPorCliente(@PathVariable String dniCliente) {
         return gestionFinancieraService.buscarPorCliente(dniCliente);
     }
+
 
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Long id) {
         gestionFinancieraService.eliminar(id);
     }
 
+
     @PutMapping
-    public GestionFinanciera actualizar(@RequestBody GestionFinanciera gestionFinanciera) {
-        return gestionFinancieraService.actualizar(gestionFinanciera);
+    public GestionFinancieraDTO actualizar(@RequestBody GestionFinancieraDTO gestionFinancieraDto) {
+        return gestionFinancieraService.actualizar(gestionFinancieraDto);
     }
 
-    // --- Reporte filtrado por tipo ---
+
     @GetMapping(value = "/por-tipo.png/{tipo}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> reportePorTipo(@PathVariable String tipo) throws Exception {
         return ResponseEntity.ok(service.graficoPiePorTipo(tipo));
     }
 
-    // --- Reporte filtrado por fecha ---
+
     @GetMapping(value = "/por-fecha.png/{fecha}", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> reportePorFecha(@PathVariable LocalDate fecha) throws Exception {
         return ResponseEntity.ok(service.graficoPiePorFecha(fecha));

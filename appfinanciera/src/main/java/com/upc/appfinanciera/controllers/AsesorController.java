@@ -1,6 +1,6 @@
 package com.upc.appfinanciera.controllers;
 
-import com.upc.appfinanciera.entidades.AsesorFinanciero;
+import com.upc.appfinanciera.dto.AsesorFinancieroDTO;
 import com.upc.appfinanciera.servicios.AsesorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,28 +14,33 @@ public class AsesorController {
     @Autowired
     private AsesorService asesorService;
 
+
     @PostMapping
-    public AsesorFinanciero insertar(@RequestBody AsesorFinanciero asesor) {
-        return asesorService.insertar(asesor);
+    public AsesorFinancieroDTO insertar(@RequestBody AsesorFinancieroDTO asesorDto) {
+        return asesorService.insertar(asesorDto);
     }
 
+
     @GetMapping
-    public List<AsesorFinanciero> buscarTodos() {
+    public List<AsesorFinancieroDTO> buscarTodos() {
         return asesorService.buscarTodos();
     }
 
+
     @GetMapping("/{dni}")
-    public AsesorFinanciero buscarPorDni(@PathVariable String dni) {
+    public AsesorFinancieroDTO buscarPorDni(@PathVariable String dni) {
         return asesorService.buscarPorDni(dni);
     }
+
 
     @DeleteMapping("/{dni}")
     public void eliminar(@PathVariable String dni) {
         asesorService.eliminar(dni);
     }
 
+
     @PutMapping
-    public AsesorFinanciero actualizar(@RequestBody AsesorFinanciero asesor) {
-        return asesorService.actualizar(asesor);
+    public AsesorFinancieroDTO actualizar(@RequestBody AsesorFinancieroDTO asesorDto) {
+        return asesorService.actualizar(asesorDto);
     }
 }

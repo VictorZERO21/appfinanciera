@@ -6,24 +6,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class AsesorFinanciero {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idAsesor;
 
-    @Column(unique = true)
+    private String nombre;
+    private String experiencia;
     private String dni;
 
-    @Column(length = 100)
-    private String nombre;
-
-    @Column(length = 500)
-    private String experiencia;
+    @OneToMany(mappedBy = "asesorFinanciero", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Consejo> consejos;
 
 
 }

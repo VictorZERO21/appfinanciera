@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -19,14 +18,19 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idReserva;
 
-
     private LocalDate fechaHoraInicio;
     private LocalDate fechaHoraFin;
 
     private String estado;
-
     private String modalidad;
 
-    private String dniCliente;
-    private String dniAsesor;
+    // Relación Many-to-One con Cliente
+    @ManyToOne
+    @JoinColumn(name = "dni_cliente", referencedColumnName = "dni")
+    private Cliente cliente;
+
+    // Relación Many-to-One con AsesorFinanciero
+    @ManyToOne
+    @JoinColumn(name = "dni_asesor", referencedColumnName = "dni")
+    private AsesorFinanciero asesorFinanciero;
 }

@@ -1,8 +1,10 @@
 package com.upc.appfinanciera.servicios;
 
+import com.upc.appfinanciera.dto.CalculadoraDTO;
 import com.upc.appfinanciera.entidades.Calculadora;
 import com.upc.appfinanciera.interfaces.ICalculadoraService;
 import com.upc.appfinanciera.repositorios.CalculadoraRepositorio;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,20 +13,25 @@ public class CalculadoraService implements ICalculadoraService {
     @Autowired
     private CalculadoraRepositorio calculadoraRepositorio;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
-    public Calculadora insertar(Calculadora calculadora) {
-        return calculadoraRepositorio.save(calculadora);
+    public CalculadoraDTO insertar(CalculadoraDTO calculadoraDto) {
+        Calculadora calculadoraEntidad = modelMapper.map(calculadoraDto, Calculadora.class);
+        Calculadora guardado = calculadoraRepositorio.save(calculadoraEntidad);
+        return modelMapper.map(guardado, CalculadoraDTO.class); // Convertir a DTO
     }
+
     @Override
     public String calcular(long monto, long cuotas, long tasa) {
-        double tasainteres = tasa / 100.0;     // a proporción
-        // Modelo simple que estabas usando (interés prorrateado):
-        double capitalPorCuota = monto / cuotas; // Cálculo de capital por cuota
-        double interesPorCuota = (monto * (tasainteres) / cuotas); // Cálculo de interés por cuota
-        double montoPorCuota = capitalPorCuota + interesPorCuota; // Monto a pagar por cuota
+        double tasainteres = tasa / 100.0;
+        double capitalPorCuota = monto / cuotas;
+        double interesPorCuota = (monto * tasainteres) / cuotas;
+        double montoPorCuota = capitalPorCuota + interesPorCuota;
 
-        double interesTotal = monto * (tasainteres); // Interés total
-        double totalPagar = monto + interesTotal; // Monto total a pagar
+        double interesTotal = monto * tasainteres;
+        double totalPagar = monto + interesTotal;
 
         return String.format(
                 "Capital por cuota: %.2f%n" +

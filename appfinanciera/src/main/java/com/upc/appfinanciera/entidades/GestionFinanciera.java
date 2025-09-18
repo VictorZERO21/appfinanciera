@@ -26,5 +26,8 @@ public class GestionFinanciera {
 
     private LocalDate fecha;
 
-    private String dniCliente;
+    // Relación con Cliente
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dni_cliente", referencedColumnName = "dni")  // Asegúrate de que el nombre de la columna sea consistente
+    private Cliente cliente;
 }

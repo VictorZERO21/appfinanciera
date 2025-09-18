@@ -1,6 +1,6 @@
 package com.upc.appfinanciera.controllers;
 
-import com.upc.appfinanciera.entidades.Cliente;
+import com.upc.appfinanciera.dto.ClienteDTO;
 import com.upc.appfinanciera.servicios.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,28 +14,33 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
+
     @PostMapping
-    public Cliente insertar(@RequestBody Cliente cliente) {
-        return clienteService.insertar(cliente);
+    public ClienteDTO insertar(@RequestBody ClienteDTO clienteDto) {
+        return clienteService.insertar(clienteDto);
     }
 
+
     @GetMapping
-    public List<Cliente> buscarTodos() {
+    public List<ClienteDTO> buscarTodos() {
         return clienteService.buscarTodos();
     }
 
+
     @GetMapping("/{dni}")
-    public Cliente buscarPorDni(@PathVariable String dni) {
+    public ClienteDTO buscarPorDni(@PathVariable String dni) {
         return clienteService.buscarPorDni(dni);
     }
+
 
     @DeleteMapping("/{dni}")
     public void eliminar(@PathVariable String dni) {
         clienteService.eliminar(dni);
     }
 
+
     @PutMapping
-    public Cliente actualizar(@RequestBody Cliente cliente) {
-        return clienteService.actualizar(cliente);
+    public ClienteDTO actualizar(@RequestBody ClienteDTO clienteDto) {
+        return clienteService.actualizar(clienteDto);
     }
 }
