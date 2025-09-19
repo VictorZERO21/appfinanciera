@@ -26,9 +26,6 @@ public class ReservaDTO {
     @Size(min = 2, max = 50, message = "El estado debe tener entre 2 y 50 caracteres")
     private String estado;
 
-    @NotNull(message = "La modalidad no puede ser nula")
-    private String modalidad;
-
     @NotNull(message = "El DNI del cliente no puede ser nulo")
     private String dniCliente;
 
