@@ -1,0 +1,26 @@
+package com.upc.appfinanciera.dto;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDate;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class DisponibilidadDTO {
+    private Long idDisponibilidad;
+
+    @NotNull(message = "La fecha no puede ser nula")
+    private LocalDate fecha;
+
+    @NotNull(message = "El campo disponible no puede ser nulo")
+    private Boolean disponible;
+
+    @NotNull(message = "El id del asesor no puede ser nulo")
+    private Long idAsesor;
+}
