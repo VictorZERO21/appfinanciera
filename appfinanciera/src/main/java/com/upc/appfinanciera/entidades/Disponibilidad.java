@@ -21,7 +21,7 @@ public class Disponibilidad {
     private Long idDisponibilidad;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate fecha; // día disponible
+    private LocalDate fecha; 
 
     private boolean disponible;
 
