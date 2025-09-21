@@ -1,0 +1,105 @@
+package com.upc.appfinanciera.servicios;
+
+import com.upc.appfinanciera.dto.DisponibilidadDTO;
+import com.upc.appfinanciera.entidades.AsesorFinanciero;
+import com.upc.appfinanciera.entidades.Disponibilidad;
+import com.upc.appfinanciera.interfaces.IDisponibilidadService;
+import com.upc.appfinanciera.repositorios.AsesorRepositorio;
+import com.upc.appfinanciera.repositorios.DisponibilidadRepositorio;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class DisponibilidadService implements IDisponibilidadService {
+
+    @Autowired
+    private DisponibilidadRepositorio disponibilidadRepositorio;
+
+    @Autowired
+    private AsesorRepositorio asesorRepositorio;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    public DisponibilidadDTO insertar(DisponibilidadDTO disponibilidadDto) {
+        AsesorFinanciero asesor = asesorRepositorio.findById(disponibilidadDto.getIdAsesor())
+                .orElseThrow(() -> new RuntimeException("Asesor no encontrado con id: " + disponibilidadDto.getIdAsesor()));
+
+        Disponibilidad disponibilidad = new Disponibilidad();
+        disponibilidad.setFecha(disponibilidadDto.getFecha());
+        disponibilidad.setDisponible(disponibilidadDto.getDisponible());
+        disponibilidad.setAsesorFinanciero(asesor);
+
+        Disponibilidad guardado = disponibilidadRepositorio.save(disponibilidad);
+        return entityToDto(guardado);
+    }
+
+    @Override
+    public List<DisponibilidadDTO> buscarTodos() {
+        return disponibilidadRepositorio.findAll()
+                .stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DisponibilidadDTO> buscarPorAsesor(Long idAsesor) {
+        if (!asesorRepositorio.existsById(idAsesor)) {
+            throw new RuntimeException("Asesor no encontrado con id: " + idAsesor);
+        }
+        return disponibilidadRepositorio.findByAsesorFinancieroIdAsesor(idAsesor)
+                .stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void eliminar(Long idDisponibilidad) {
+        if (!disponibilidadRepositorio.existsById(idDisponibilidad)) {
+            throw new RuntimeException("Disponibilidad no encontrada con id: " + idDisponibilidad);
+        }
+        disponibilidadRepositorio.deleteById(idDisponibilidad);
+    }
+
+    // ---------- NUEVO: actualizar ----------
+    @Override
+    public DisponibilidadDTO actualizar(DisponibilidadDTO disponibilidadDto) {
+        if (disponibilidadDto.getIdDisponibilidad() == null) {
+            throw new RuntimeException("El idDisponibilidad es requerido para actualizar.");
+        }
+
+        Long id = disponibilidadDto.getIdDisponibilidad();
+
+        Disponibilidad existente = disponibilidadRepositorio.findById(id)
+                .orElseThrow(() -> new RuntimeException("Disponibilidad no encontrada con id: " + id));
+
+        // Actualizar campos básicos
+        existente.setFecha(disponibilidadDto.getFecha());
+        existente.setDisponible(disponibilidadDto.getDisponible());
+
+        // Validar y actualizar asesor si corresponde
+        AsesorFinanciero asesor = asesorRepositorio.findById(disponibilidadDto.getIdAsesor())
+                .orElseThrow(() -> new RuntimeException("Asesor no encontrado con id: " + disponibilidadDto.getIdAsesor()));
+        existente.setAsesorFinanciero(asesor);
+
+        // Guardar cambios
+        Disponibilidad guardado = disponibilidadRepositorio.save(existente);
+
+        return entityToDto(guardado);
+    }
+    // ---------- FIN actualizar ----------
+
+    // Conversión: Entity -> DTO (usa ModelMapper y completa idAsesor)
+    private DisponibilidadDTO entityToDto(Disponibilidad disponibilidad) {
+        DisponibilidadDTO dto = modelMapper.map(disponibilidad, DisponibilidadDTO.class);
+        if (disponibilidad.getAsesorFinanciero() != null) {
+            dto.setIdAsesor(disponibilidad.getAsesorFinanciero().getIdAsesor());
+        }
+        return dto;
+    }
+}
