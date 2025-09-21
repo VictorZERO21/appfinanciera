@@ -66,7 +66,6 @@ public class DisponibilidadService implements IDisponibilidadService {
         disponibilidadRepositorio.deleteById(idDisponibilidad);
     }
 
-    // ---------- NUEVO: actualizar ----------
     @Override
     public DisponibilidadDTO actualizar(DisponibilidadDTO disponibilidadDto) {
         if (disponibilidadDto.getIdDisponibilidad() == null) {
@@ -78,23 +77,18 @@ public class DisponibilidadService implements IDisponibilidadService {
         Disponibilidad existente = disponibilidadRepositorio.findById(id)
                 .orElseThrow(() -> new RuntimeException("Disponibilidad no encontrada con id: " + id));
 
-        // Actualizar campos básicos
         existente.setFecha(disponibilidadDto.getFecha());
         existente.setDisponible(disponibilidadDto.getDisponible());
 
-        // Validar y actualizar asesor si corresponde
         AsesorFinanciero asesor = asesorRepositorio.findById(disponibilidadDto.getIdAsesor())
                 .orElseThrow(() -> new RuntimeException("Asesor no encontrado con id: " + disponibilidadDto.getIdAsesor()));
         existente.setAsesorFinanciero(asesor);
 
-        // Guardar cambios
         Disponibilidad guardado = disponibilidadRepositorio.save(existente);
 
         return entityToDto(guardado);
     }
-    // ---------- FIN actualizar ----------
 
-    // Conversión: Entity -> DTO (usa ModelMapper y completa idAsesor)
     private DisponibilidadDTO entityToDto(Disponibilidad disponibilidad) {
         DisponibilidadDTO dto = modelMapper.map(disponibilidad, DisponibilidadDTO.class);
         if (disponibilidad.getAsesorFinanciero() != null) {
