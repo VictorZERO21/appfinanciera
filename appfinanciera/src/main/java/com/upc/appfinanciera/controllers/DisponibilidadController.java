@@ -16,26 +16,22 @@ public class DisponibilidadController {
     @Autowired
     private DisponibilidadService disponibilidadService;
 
-    // Crear nueva disponibilidad
     @PostMapping
     public ResponseEntity<DisponibilidadDTO> insertar(@RequestBody DisponibilidadDTO disponibilidadDto) {
         DisponibilidadDTO nuevaDisponibilidad = disponibilidadService.insertar(disponibilidadDto);
         return new ResponseEntity<>(nuevaDisponibilidad, HttpStatus.CREATED);
     }
 
-    // Listar todas las disponibilidades
     @GetMapping
     public List<DisponibilidadDTO> buscarTodos() {
         return disponibilidadService.buscarTodos();
     }
 
-    // Listar disponibilidades por asesor
     @GetMapping("/asesor/{idAsesor}")
     public List<DisponibilidadDTO> buscarPorAsesor(@PathVariable Long idAsesor) {
         return disponibilidadService.buscarPorAsesor(idAsesor);
     }
 
-    // Eliminar disponibilidad por id
     @DeleteMapping("/{idDisponibilidad}")
     public ResponseEntity<Void> eliminar(@PathVariable Long idDisponibilidad) {
         disponibilidadService.eliminar(idDisponibilidad);
