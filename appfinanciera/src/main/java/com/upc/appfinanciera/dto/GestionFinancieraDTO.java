@@ -1,5 +1,6 @@
 package com.upc.appfinanciera.dto;
 
+import com.upc.appfinanciera.entidades.Cliente;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,6 @@ public class GestionFinancieraDTO {
 
     private LocalDate fecha;
 
-    @NotNull(message = "El DNI del cliente no puede ser nulo")
-    private String dniCliente;
+    @NotNull(message = "El cliente no puede ser nulo")
+    private ClienteDTO cliente;
 }
