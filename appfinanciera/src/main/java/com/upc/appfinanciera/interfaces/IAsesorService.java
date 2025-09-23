@@ -4,9 +4,14 @@ import com.upc.appfinanciera.dto.AsesorFinancieroDTO;
 import java.util.List;
 
 public interface IAsesorService {
-    public AsesorFinancieroDTO insertar(AsesorFinancieroDTO asesor);
-    public AsesorFinancieroDTO actualizar(AsesorFinancieroDTO asesor);
-    public void eliminar(String dni);
-    public AsesorFinancieroDTO buscarPorDni(String dni);
-    public List<AsesorFinancieroDTO> buscarTodos();
+    AsesorFinancieroDTO insertarAsesor(AsesorFinancieroDTO asesorDTO);
+    AsesorFinancieroDTO modificarAsesor(AsesorFinancieroDTO asesorDTO);
+    void eliminarAsesor(Long id);
+    AsesorFinancieroDTO buscarAsesorPorId(Long id);
+    AsesorFinancieroDTO buscarAsesorPorDni(String dni);
+    AsesorFinancieroDTO buscarAsesorPorEmail(String email);
+    List<AsesorFinancieroDTO> listarAsesores();
+    List<AsesorFinancieroDTO> buscarAsesoresPorNombre(String nombre);
+    List<AsesorFinancieroDTO> buscarAsesoresPorEspecialidad(String especialidad);
 }
+
