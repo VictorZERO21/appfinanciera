@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ReservaRepositorio extends JpaRepository<Reserva, Long> {
-    // Método para encontrar reservas por el dni del cliente
-    List<Reserva> findByClienteDni(String dniCliente); // Cambié a Cliente.dni, que es el campo de la relación
+    List<Reserva> findByCliente_IdCliente(Long idCliente);
+    List<Reserva> findByCliente_Dni(String dniCliente);
+    List<Reserva> findByAsesor_IdAsesor(Long idAsesor);
+    List<Reserva> findByAsesor_Dni(String dniAsesor);
 }
-
