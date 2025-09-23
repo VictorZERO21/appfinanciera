@@ -10,30 +10,22 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "pagos")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Reserva {
+public class Pago {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idReserva;
+    private Long idPago;
 
-    private LocalDateTime fechaHoraInicio;
-    private LocalDateTime fechaHoraFin;
+    private String nombreTarjeta;
+    private String numeroTarjeta;
 
-    private String estado;
-    private String modalidad;
+    private int mesExpiracion;
+    private int anioExpiracion;
 
-    @ManyToOne
-    @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")
-    private Cliente cliente;
-
-    @ManyToOne
-    @JoinColumn(name = "idAsesor", referencedColumnName = "idAsesor")
-    private AsesorFinanciero asesor;
-
-    @OneToOne
-    @JoinColumn(name = "idPago")
-    private Pago pago;
+    private String cvc;
+    private double montoTotal;
 }
