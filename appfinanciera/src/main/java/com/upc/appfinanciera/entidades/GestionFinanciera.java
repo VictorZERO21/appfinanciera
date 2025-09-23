@@ -26,8 +26,8 @@ public class GestionFinanciera {
 
     private LocalDate fecha;
 
-    // Relación con Cliente
+    // Relación con Cliente usando la entidad Cliente completa
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dni_cliente", referencedColumnName = "dni")  // Asegúrate de que el nombre de la columna sea consistente
-    private Cliente cliente;
+    @JoinColumn(name = "id_cliente", referencedColumnName = "idCliente")  // Asegúrate de usar la columna idCliente
+    private Cliente cliente;  // Relación con Cliente completo
 }
