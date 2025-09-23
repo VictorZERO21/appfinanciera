@@ -22,77 +22,74 @@ public class ReservaService implements IReservaService {
     private ReservaRepositorio reservaRepositorio;
 
     @Autowired
-    private ClienteRepositorio clienteRepositorio;
-
-    @Autowired
-    private AsesorRepositorio asesorFinancieroRepositorio;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @Override
-    public ReservaDTO insertar(ReservaDTO reservaDTO) {
-        // Buscar Cliente por DNI
-        Cliente cliente = clienteRepositorio.findByDni(reservaDTO.getDniCliente());
-        if (cliente == null) {
-            throw new RuntimeException("Cliente no encontrado con DNI: " + reservaDTO.getDniCliente());
-        }
-
-        // Buscar AsesorFinanciero por DNI
-        AsesorFinanciero asesor = asesorFinancieroRepositorio.findByDni(reservaDTO.getDniAsesor());
-        if (asesor == null) {
-            throw new RuntimeException("Asesor no encontrado con DNI: " + reservaDTO.getDniAsesor());
-        }
-
-        // Crear nueva Reserva y asociar Cliente y AsesorFinanciero
-        Reserva reserva = new Reserva();
-        reserva.setCliente(cliente);  // Asociar Cliente
-        reserva.setAsesorFinanciero(asesor);  // Asociar Asesor
-        reserva.setFechaHoraInicio(reservaDTO.getFechaHoraInicio());
-        reserva.setFechaHoraFin(reservaDTO.getFechaHoraFin());
-        reserva.setEstado(reservaDTO.getEstado());
-        reserva.setModalidad(reservaDTO.getModalidad());
-
-        // Guardar la reserva en la base de datos
-        Reserva savedReserva = reservaRepositorio.save(reserva);
-
-        // Convertir a DTO y devolver
-        return modelMapper.map(savedReserva, ReservaDTO.class);
+    public ReservaDTO insertarReserva(ReservaDTO reservaDTO) {
+        Reserva reserva = modelMapper.map(reservaDTO, Reserva.class);
+        return modelMapper.map(reservaRepositorio.save(reserva), ReservaDTO.class);
     }
 
     @Override
-    public ReservaDTO actualizar(ReservaDTO reservaDto) {
-        return reservaRepositorio.findById(reservaDto.getIdReserva())
+    public ReservaDTO modificarReserva(ReservaDTO reservaDTO) {
+        return reservaRepositorio.findById(reservaDTO.getIdReserva())
                 .map(existing -> {
-                    Reserva reservaEntidad = modelMapper.map(reservaDto, Reserva.class);
-                    Reserva guardado = reservaRepositorio.save(reservaEntidad);
-                    return modelMapper.map(guardado, ReservaDTO.class); // Convertir a DTO
+                    Reserva reservaEntidad = modelMapper.map(reservaDTO, Reserva.class);
+                    return modelMapper.map(reservaRepositorio.save(reservaEntidad), ReservaDTO.class);
                 })
-                .orElseThrow(() -> new ReservaNotFoundException("Reserva con ID " + reservaDto.getIdReserva() + " no encontrada"));
+                .orElseThrow(() -> new RuntimeException("Reserva con ID " + reservaDTO.getIdReserva() + " no encontrada"));
     }
 
     @Override
-    public void eliminar(Long id) {
+    public void eliminarReserva(Long id) {
         if (!reservaRepositorio.existsById(id)) {
-            throw new ReservaNotFoundException("Reserva no encontrada con ID: " + id);
+            throw new RuntimeException("Reserva no encontrada con ID: " + id);
         }
         reservaRepositorio.deleteById(id);
     }
 
     @Override
-    public List<ReservaDTO> buscarPorCliente(String dniCliente) {
-        List<Reserva> reservas = reservaRepositorio.findByClienteDni(dniCliente); // Usar el nombre correcto
-        return reservas.stream()
-                .map(reserva -> modelMapper.map(reserva, ReservaDTO.class)) // Convertir a DTO
+    public ReservaDTO buscarReservaPorId(Long id) {
+        return reservaRepositorio.findById(id)
+                .map(reserva -> modelMapper.map(reserva, ReservaDTO.class))
+                .orElseThrow(() -> new RuntimeException("Reserva con ID " + id + " no encontrada"));
+    }
+
+    @Override
+    public List<ReservaDTO> listarReservas() {
+        return reservaRepositorio.findAll().stream()
+                .map(reserva -> modelMapper.map(reserva, ReservaDTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ReservaDTO> buscarTodos() {
-        List<Reserva> reservas = reservaRepositorio.findAll();
-        return reservas.stream()
-                .map(reserva -> modelMapper.map(reserva, ReservaDTO.class)) // Convertir a DTO
+    public List<ReservaDTO> listarReservasPorClienteId(Long idCliente) {
+        return reservaRepositorio.findByCliente_IdCliente(idCliente).stream()
+                .map(reserva -> modelMapper.map(reserva, ReservaDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReservaDTO> listarReservasPorClienteDni(String dniCliente) {
+        return reservaRepositorio.findByCliente_Dni(dniCliente).stream()
+                .map(reserva -> modelMapper.map(reserva, ReservaDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReservaDTO> listarReservasPorAsesorId(Long idAsesor) {
+        return reservaRepositorio.findByAsesor_IdAsesor(idAsesor).stream()
+                .map(reserva -> modelMapper.map(reserva, ReservaDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReservaDTO> listarReservasPorAsesorDni(String dniAsesor) {
+        return reservaRepositorio.findByAsesor_Dni(dniAsesor).stream()
+                .map(reserva -> modelMapper.map(reserva, ReservaDTO.class))
                 .collect(Collectors.toList());
     }
 }
+
+
 
