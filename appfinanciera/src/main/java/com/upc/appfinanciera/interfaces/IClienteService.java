@@ -4,9 +4,12 @@ import com.upc.appfinanciera.dto.ClienteDTO;
 import java.util.List;
 
 public interface IClienteService {
-    public ClienteDTO insertar(ClienteDTO cliente);
-    public ClienteDTO actualizar(ClienteDTO cliente);
-    public void eliminar(String dni);
-    public ClienteDTO buscarPorDni(String dni);
-    public List<ClienteDTO> buscarTodos();
+    ClienteDTO insertarCliente(ClienteDTO clienteDTO);
+    ClienteDTO modificarCliente(ClienteDTO clienteDTO);
+    void eliminarCliente(Long id);
+    ClienteDTO buscarClientePorId(Long id);
+    ClienteDTO buscarClientePorDni(String dni);
+    ClienteDTO buscarClientePorEmail(String email);
+    List<ClienteDTO> listarClientes();
+    List<ClienteDTO> buscarClientesPorNombre(String nombre);
 }
