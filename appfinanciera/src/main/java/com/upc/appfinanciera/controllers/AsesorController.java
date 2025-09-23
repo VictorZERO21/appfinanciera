@@ -12,35 +12,51 @@ import java.util.List;
 public class AsesorController {
 
     @Autowired
-    private AsesorService asesorService;
-
+    private IAsesorService asesorService;
 
     @PostMapping
-    public AsesorFinancieroDTO insertar(@RequestBody AsesorFinancieroDTO asesorDto) {
-        return asesorService.insertar(asesorDto);
+    public ResponseEntity<AsesorFinancieroDTO> insertar(@Valid @RequestBody AsesorFinancieroDTO asesorDTO) {
+        return ResponseEntity.ok(asesorService.insertarAsesor(asesorDTO));
     }
-
-
-    @GetMapping
-    public List<AsesorFinancieroDTO> buscarTodos() {
-        return asesorService.buscarTodos();
-    }
-
-
-    @GetMapping("/{dni}")
-    public AsesorFinancieroDTO buscarPorDni(@PathVariable String dni) {
-        return asesorService.buscarPorDni(dni);
-    }
-
-
-    @DeleteMapping("/{dni}")
-    public void eliminar(@PathVariable String dni) {
-        asesorService.eliminar(dni);
-    }
-
 
     @PutMapping
-    public AsesorFinancieroDTO actualizar(@RequestBody AsesorFinancieroDTO asesorDto) {
-        return asesorService.actualizar(asesorDto);
+    public ResponseEntity<AsesorFinancieroDTO> modificar(@Valid @RequestBody AsesorFinancieroDTO asesorDTO) {
+        return ResponseEntity.ok(asesorService.modificarAsesor(asesorDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Long id) {
+        asesorService.eliminarAsesor(id);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AsesorFinancieroDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(asesorService.buscarAsesorPorId(id));
+    }
+
+    @GetMapping("/dni/{dni}")
+    public ResponseEntity<AsesorFinancieroDTO> buscarPorDni(@PathVariable String dni) {
+        return ResponseEntity.ok(asesorService.buscarAsesorPorDni(dni));
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<AsesorFinancieroDTO> buscarPorEmail(@PathVariable String email) {
+        return ResponseEntity.ok(asesorService.buscarAsesorPorEmail(email));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AsesorFinancieroDTO>> listar() {
+        return ResponseEntity.ok(asesorService.listarAsesores());
+    }
+
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<List<AsesorFinancieroDTO>> buscarPorNombre(@PathVariable String nombre) {
+        return ResponseEntity.ok(asesorService.buscarAsesoresPorNombre(nombre));
+    }
+
+    @GetMapping("/especialidad/{especialidad}")
+    public ResponseEntity<List<AsesorFinancieroDTO>> buscarPorEspecialidad(@PathVariable String especialidad) {
+        return ResponseEntity.ok(asesorService.buscarAsesoresPorEspecialidad(especialidad));
     }
 }
+
