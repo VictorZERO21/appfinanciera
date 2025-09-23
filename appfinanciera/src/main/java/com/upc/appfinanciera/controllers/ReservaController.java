@@ -13,37 +13,52 @@ import java.util.List;
 @RequestMapping("/api/reservas")
 public class ReservaController {
 
-    @Autowired
-    private ReservaService reservaService;
-
+   @Autowired
+    private IReservaService reservaService;
 
     @PostMapping
-    public ResponseEntity<ReservaDTO> insertarReserva(@RequestBody ReservaDTO reservaDTO) {
-        ReservaDTO nuevaReserva = reservaService.insertar(reservaDTO);
-        return new ResponseEntity<>(nuevaReserva, HttpStatus.CREATED);
+    public ResponseEntity<ReservaDTO> insertar(@Valid @RequestBody ReservaDTO reservaDTO) {
+        return new ResponseEntity<>(reservaService.insertarReserva(reservaDTO), HttpStatus.CREATED);
     }
 
-
-    @GetMapping
-    public List<ReservaDTO> buscarTodos() {
-        return reservaService.buscarTodos();
+    @PutMapping
+    public ResponseEntity<ReservaDTO> modificar(@Valid @RequestBody ReservaDTO reservaDTO) {
+        return ResponseEntity.ok(reservaService.modificarReserva(reservaDTO));
     }
-
-
-    @GetMapping("/{dniCliente}")
-    public List<ReservaDTO> buscarPorCliente(@PathVariable String dniCliente) {
-        return reservaService.buscarPorCliente(dniCliente);
-    }
-
 
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Long id) {
-        reservaService.eliminar(id);
+        reservaService.eliminarReserva(id);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ReservaDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(reservaService.buscarReservaPorId(id));
+    }
 
-    @PutMapping
-    public ReservaDTO actualizar(@RequestBody ReservaDTO reservaDto) {
-        return reservaService.actualizar(reservaDto);
+    @GetMapping
+    public ResponseEntity<List<ReservaDTO>> listar() {
+        return ResponseEntity.ok(reservaService.listarReservas());
+    }
+
+    @GetMapping("/cliente/{idCliente}")
+    public ResponseEntity<List<ReservaDTO>> listarPorClienteId(@PathVariable Long idCliente) {
+        return ResponseEntity.ok(reservaService.listarReservasPorClienteId(idCliente));
+    }
+
+    @GetMapping("/cliente/dni/{dniCliente}")
+    public ResponseEntity<List<ReservaDTO>> listarPorClienteDni(@PathVariable String dniCliente) {
+        return ResponseEntity.ok(reservaService.listarReservasPorClienteDni(dniCliente));
+    }
+
+    @GetMapping("/asesor/{idAsesor}")
+    public ResponseEntity<List<ReservaDTO>> listarPorAsesorId(@PathVariable Long idAsesor) {
+        return ResponseEntity.ok(reservaService.listarReservasPorAsesorId(idAsesor));
+    }
+
+    @GetMapping("/asesor/dni/{dniAsesor}")
+    public ResponseEntity<List<ReservaDTO>> listarPorAsesorDni(@PathVariable String dniAsesor) {
+        return ResponseEntity.ok(reservaService.listarReservasPorAsesorDni(dniAsesor));
     }
 }
+
