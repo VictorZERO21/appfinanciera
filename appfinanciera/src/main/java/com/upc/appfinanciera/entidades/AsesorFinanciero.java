@@ -17,14 +17,21 @@ public class AsesorFinanciero {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idAsesor;
+    private Long idAsesor;
 
-    private String nombre;
-    private String experiencia;
+    @Column(unique = true, nullable = false, length = 20)
     private String dni;
 
-    @OneToMany(mappedBy = "asesorFinanciero", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Column(length = 100, nullable = false)
+    private String nombre;
+
+    private String especialidad;
+    private String experiencia;
+    private String email;
+
+    @OneToMany(mappedBy = "asesor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Consejo> consejos;
 
 
 }
+
