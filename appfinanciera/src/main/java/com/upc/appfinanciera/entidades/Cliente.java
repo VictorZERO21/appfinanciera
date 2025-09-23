@@ -14,14 +14,18 @@ import lombok.Setter;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idCliente;
+    private Long idCliente;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false, length = 20)
     private String dni;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String nombre;
+
+    private String email;
+    private String telefono;
 
     private String tipo;
 
 }
+
