@@ -12,35 +12,46 @@ import java.util.List;
 public class ClienteController {
 
     @Autowired
-    private ClienteService clienteService;
-
+    private IClienteService clienteService;
 
     @PostMapping
-    public ClienteDTO insertar(@RequestBody ClienteDTO clienteDto) {
-        return clienteService.insertar(clienteDto);
+    public ResponseEntity<ClienteDTO> insertar(@Valid @RequestBody ClienteDTO clienteDTO) {
+        return ResponseEntity.ok(clienteService.insertarCliente(clienteDTO));
     }
-
-
-    @GetMapping
-    public List<ClienteDTO> buscarTodos() {
-        return clienteService.buscarTodos();
-    }
-
-
-    @GetMapping("/{dni}")
-    public ClienteDTO buscarPorDni(@PathVariable String dni) {
-        return clienteService.buscarPorDni(dni);
-    }
-
-
-    @DeleteMapping("/{dni}")
-    public void eliminar(@PathVariable String dni) {
-        clienteService.eliminar(dni);
-    }
-
 
     @PutMapping
-    public ClienteDTO actualizar(@RequestBody ClienteDTO clienteDto) {
-        return clienteService.actualizar(clienteDto);
+    public ResponseEntity<ClienteDTO> modificar(@Valid @RequestBody ClienteDTO clienteDTO) {
+        return ResponseEntity.ok(clienteService.modificarCliente(clienteDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Long id) {
+        clienteService.eliminarCliente(id);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClienteDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(clienteService.buscarClientePorId(id));
+    }
+
+    @GetMapping("/dni/{dni}")
+    public ResponseEntity<ClienteDTO> buscarPorDni(@PathVariable String dni) {
+        return ResponseEntity.ok(clienteService.buscarClientePorDni(dni));
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<ClienteDTO> buscarPorEmail(@PathVariable String email) {
+        return ResponseEntity.ok(clienteService.buscarClientePorEmail(email));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ClienteDTO>> listar() {
+        return ResponseEntity.ok(clienteService.listarClientes());
+    }
+
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<List<ClienteDTO>> buscarPorNombre(@PathVariable String nombre) {
+        return ResponseEntity.ok(clienteService.buscarClientesPorNombre(nombre));
     }
 }
+
