@@ -1,5 +1,6 @@
 package com.upc.appfinanciera.servicios;
 
+import com.upc.appfinanciera.dto.ClienteDTO;
 import com.upc.appfinanciera.dto.GestionFinancieraDTO;
 import com.upc.appfinanciera.entidades.Cliente;
 import com.upc.appfinanciera.entidades.GestionFinanciera;
@@ -28,24 +29,21 @@ public class GestionFinancieraService implements IGestionFinancieraService {
 
     @Override
     public GestionFinancieraDTO insertar(GestionFinancieraDTO gestionFinancieraDTO) {
-        // Buscar Cliente por DNI
-        Cliente cliente = clienteRepositorio.findByDni(gestionFinancieraDTO.getDniCliente());
-        if (cliente == null) {
-            throw new RuntimeException("Cliente no encontrado con DNI: " + gestionFinancieraDTO.getDniCliente());
-        }
+        // Obtener el Cliente completo desde el DTO (ya que es un objeto completo)
+        Cliente cliente = modelMapper.map(gestionFinancieraDTO.getCliente(), Cliente.class);  // Mapea de ClienteDTO a Cliente
 
-        // Crear nueva entidad GestionFinanciera
+        // Crear la nueva entidad GestionFinanciera
         GestionFinanciera gestionFinanciera = new GestionFinanciera();
         gestionFinanciera.setTitulo(gestionFinancieraDTO.getTitulo());
         gestionFinanciera.setTipo(gestionFinancieraDTO.getTipo());
         gestionFinanciera.setMonto(gestionFinancieraDTO.getMonto());
         gestionFinanciera.setFecha(gestionFinancieraDTO.getFecha());
-        gestionFinanciera.setCliente(cliente);  // Asociar Cliente
+        gestionFinanciera.setCliente(cliente);  // Asociar el Cliente completo
 
         // Guardar la gestión financiera en la base de datos
         GestionFinanciera savedGestionFinanciera = gestionFinancieraRepositorio.save(gestionFinanciera);
 
-        // Convertir a DTO y devolver
+        // Convertir la entidad guardada en un DTO y devolver
         return modelMapper.map(savedGestionFinanciera, GestionFinancieraDTO.class);
     }
 
@@ -89,8 +87,15 @@ public class GestionFinancieraService implements IGestionFinancieraService {
     @Override
     public List<GestionFinancieraDTO> buscarTodos() {
         List<GestionFinanciera> gestiones = gestionFinancieraRepositorio.findAll();
+
         return gestiones.stream()
-                .map(gestion -> modelMapper.map(gestion, GestionFinancieraDTO.class)) // Convertir a DTO
+                .map(gestion -> {
+                    GestionFinancieraDTO dto = modelMapper.map(gestion, GestionFinancieraDTO.class);
+                    // Mapear Cliente a ClienteDTO correctamente
+                    ClienteDTO clienteDTO = modelMapper.map(gestion.getCliente(), ClienteDTO.class);
+                    dto.setCliente(clienteDTO);  // Asignar el DTO de Cliente
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 }
