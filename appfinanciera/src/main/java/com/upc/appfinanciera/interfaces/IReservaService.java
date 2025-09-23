@@ -4,9 +4,13 @@ import com.upc.appfinanciera.dto.ReservaDTO;
 import java.util.List;
 
 public interface IReservaService {
-    public ReservaDTO insertar(ReservaDTO reserva);
-    public ReservaDTO actualizar(ReservaDTO reserva);
-    public void eliminar(Long id);
-    public List<ReservaDTO> buscarPorCliente(String dniCliente);
-    public List<ReservaDTO> buscarTodos();
+    ReservaDTO insertarReserva(ReservaDTO reservaDTO);
+    ReservaDTO modificarReserva(ReservaDTO reservaDTO);
+    void eliminarReserva(Long id);
+    ReservaDTO buscarReservaPorId(Long id);
+    List<ReservaDTO> listarReservas();
+    List<ReservaDTO> listarReservasPorClienteId(Long idCliente);
+    List<ReservaDTO> listarReservasPorClienteDni(String dniCliente);
+    List<ReservaDTO> listarReservasPorAsesorId(Long idAsesor);
+    List<ReservaDTO> listarReservasPorAsesorDni(String dniAsesor);
 }
