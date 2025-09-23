@@ -16,21 +16,24 @@ import java.time.LocalDate;
 public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idReserva;
+    private Long idReserva;
 
-    private LocalDate fechaHoraInicio;
-    private LocalDate fechaHoraFin;
+    private LocalDateTime fechaHoraInicio;
+    private LocalDateTime fechaHoraFin;
 
     private String estado;
     private String modalidad;
 
-    // Relación Many-to-One con Cliente
     @ManyToOne
-    @JoinColumn(name = "dni_cliente", referencedColumnName = "dni")
+    @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")
     private Cliente cliente;
 
-    // Relación Many-to-One con AsesorFinanciero
     @ManyToOne
-    @JoinColumn(name = "dni_asesor", referencedColumnName = "dni")
-    private AsesorFinanciero asesorFinanciero;
+    @JoinColumn(name = "idAsesor", referencedColumnName = "idAsesor")
+    private AsesorFinanciero asesor;
+
+    @OneToOne
+    @JoinColumn(name = "idPago")
+    private Pago pago;
 }
+
