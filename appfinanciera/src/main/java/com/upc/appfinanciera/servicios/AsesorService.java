@@ -21,42 +21,72 @@ public class AsesorService implements IAsesorService {
     private ModelMapper modelMapper;
 
     @Override
-    public AsesorFinancieroDTO insertar(AsesorFinancieroDTO asesorDto) {
-        AsesorFinanciero asesorEntidad = modelMapper.map(asesorDto, AsesorFinanciero.class);
-        AsesorFinanciero guardado = asesorRepositorio.save(asesorEntidad);
-        return modelMapper.map(guardado, AsesorFinancieroDTO.class); // Convertir a DTO
+    public AsesorFinancieroDTO insertarAsesor(AsesorFinancieroDTO asesorDTO) {
+        AsesorFinanciero asesor = modelMapper.map(asesorDTO, AsesorFinanciero.class);
+        return modelMapper.map(asesorRepositorio.save(asesor), AsesorFinancieroDTO.class);
     }
 
     @Override
-    public AsesorFinancieroDTO actualizar(AsesorFinancieroDTO asesorDto) {
-        AsesorFinanciero asesorEntidad = modelMapper.map(asesorDto, AsesorFinanciero.class);
-        AsesorFinanciero guardado = asesorRepositorio.save(asesorEntidad);
-        return modelMapper.map(guardado, AsesorFinancieroDTO.class); // Convertir a DTO
+    public AsesorFinancieroDTO modificarAsesor(AsesorFinancieroDTO asesorDTO) {
+        return asesorRepositorio.findById(asesorDTO.getIdAsesor())
+                .map(existing -> {
+                    AsesorFinanciero asesorEntidad = modelMapper.map(asesorDTO, AsesorFinanciero.class);
+                    return modelMapper.map(asesorRepositorio.save(asesorEntidad), AsesorFinancieroDTO.class);
+                })
+                .orElseThrow(() -> new RuntimeException("Asesor con ID " + asesorDTO.getIdAsesor() + " no encontrado"));
     }
 
     @Override
-    public void eliminar(String dni) {
+    public void eliminarAsesor(Long id) {
+        if (!asesorRepositorio.existsById(id)) {
+            throw new RuntimeException("Asesor no encontrado con ID: " + id);
+        }
+        asesorRepositorio.deleteById(id);
+    }
+
+    @Override
+    public AsesorFinancieroDTO buscarAsesorPorId(Long id) {
+        return asesorRepositorio.findById(id)
+                .map(asesor -> modelMapper.map(asesor, AsesorFinancieroDTO.class))
+                .orElseThrow(() -> new RuntimeException("Asesor con ID " + id + " no encontrado"));
+    }
+
+    @Override
+    public AsesorFinancieroDTO buscarAsesorPorDni(String dni) {
         AsesorFinanciero asesor = asesorRepositorio.findByDni(dni);
         if (asesor == null) {
-            throw new AsesorNotFoundException("Asesor con DNI " + dni + " no encontrado");
+            throw new RuntimeException("Asesor con DNI " + dni + " no encontrado");
         }
-        asesorRepositorio.delete(asesor);
+        return modelMapper.map(asesor, AsesorFinancieroDTO.class);
     }
 
     @Override
-    public AsesorFinancieroDTO buscarPorDni(String dni) {
-        AsesorFinanciero asesor = asesorRepositorio.findByDni(dni);
+    public AsesorFinancieroDTO buscarAsesorPorEmail(String email) {
+        AsesorFinanciero asesor = asesorRepositorio.findByEmail(email);
         if (asesor == null) {
-            throw new AsesorNotFoundException("Asesor con DNI " + dni + " no encontrado");
+            throw new RuntimeException("Asesor con email " + email + " no encontrado");
         }
-        return modelMapper.map(asesor, AsesorFinancieroDTO.class); // Convertir a DTO
+        return modelMapper.map(asesor, AsesorFinancieroDTO.class);
     }
 
     @Override
-    public List<AsesorFinancieroDTO> buscarTodos() {
-        List<AsesorFinanciero> asesores = asesorRepositorio.findAll();
-        return asesores.stream()
-                .map(asesor -> modelMapper.map(asesor, AsesorFinancieroDTO.class)) // Convertir a DTO
+    public List<AsesorFinancieroDTO> listarAsesores() {
+        return asesorRepositorio.findAll().stream()
+                .map(asesor -> modelMapper.map(asesor, AsesorFinancieroDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AsesorFinancieroDTO> buscarAsesoresPorNombre(String nombre) {
+        return asesorRepositorio.findByNombreContainingIgnoreCase(nombre).stream()
+                .map(asesor -> modelMapper.map(asesor, AsesorFinancieroDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AsesorFinancieroDTO> buscarAsesoresPorEspecialidad(String especialidad) {
+        return asesorRepositorio.findByEspecialidadContainingIgnoreCase(especialidad).stream()
+                .map(asesor -> modelMapper.map(asesor, AsesorFinancieroDTO.class))
                 .collect(Collectors.toList());
     }
 }
