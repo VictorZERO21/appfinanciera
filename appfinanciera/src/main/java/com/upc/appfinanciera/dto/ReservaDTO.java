@@ -14,21 +14,29 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReservaDTO {
-    private long idReserva;
+    private Long idReserva;
 
     @NotNull(message = "La fecha y hora de inicio no pueden ser nulas")
-    private LocalDate fechaHoraInicio;
+    private LocalDateTime fechaHoraInicio;
 
     @NotNull(message = "La fecha y hora de fin no pueden ser nulas")
-    private LocalDate fechaHoraFin;
+    private LocalDateTime fechaHoraFin;
 
     @NotNull(message = "El estado no puede ser nulo")
     @Size(min = 2, max = 50, message = "El estado debe tener entre 2 y 50 caracteres")
     private String estado;
 
-    @NotNull(message = "El DNI del cliente no puede ser nulo")
-    private String dniCliente;
+    private String modalidad;
 
-    @NotNull(message = "El DNI del asesor no puede ser nulo")
-    private String dniAsesor;
+    @NotNull(message = "El cliente es obligatorio")
+    @Valid
+    private ClienteDTO cliente;
+
+    @NotNull(message = "El asesor es obligatorio")
+    @Valid
+    private AsesorFinancieroDTO asesor;
+
+    @NotNull(message = "El pago es obligatorio")
+    @Valid
+    private PagoDTO pago;
 }
