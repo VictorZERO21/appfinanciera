@@ -21,42 +21,65 @@ public class ClienteService implements IClienteService {
     private ModelMapper modelMapper;
 
     @Override
-    public ClienteDTO insertar(ClienteDTO clienteDto) {
-        Cliente clienteEntidad = modelMapper.map(clienteDto, Cliente.class);
-        Cliente guardado = clienteRepositorio.save(clienteEntidad);
-        return modelMapper.map(guardado, ClienteDTO.class); // Convertir a DTO
+    public ClienteDTO insertarCliente(ClienteDTO clienteDTO) {
+        Cliente cliente = modelMapper.map(clienteDTO, Cliente.class);
+        return modelMapper.map(clienteRepositorio.save(cliente), ClienteDTO.class);
     }
 
     @Override
-    public ClienteDTO actualizar(ClienteDTO clienteDto) {
-        Cliente clienteEntidad = modelMapper.map(clienteDto, Cliente.class);
-        Cliente guardado = clienteRepositorio.save(clienteEntidad);
-        return modelMapper.map(guardado, ClienteDTO.class); // Convertir a DTO
+    public ClienteDTO modificarCliente(ClienteDTO clienteDTO) {
+        return clienteRepositorio.findById(clienteDTO.getIdCliente())
+                .map(existing -> {
+                    Cliente clienteEntidad = modelMapper.map(clienteDTO, Cliente.class);
+                    return modelMapper.map(clienteRepositorio.save(clienteEntidad), ClienteDTO.class);
+                })
+                .orElseThrow(() -> new RuntimeException("Cliente con ID " + clienteDTO.getIdCliente() + " no encontrado"));
     }
 
     @Override
-    public void eliminar(String dni) {
+    public void eliminarCliente(Long id) {
+        if (!clienteRepositorio.existsById(id)) {
+            throw new RuntimeException("Cliente no encontrado con ID: " + id);
+        }
+        clienteRepositorio.deleteById(id);
+    }
+
+    @Override
+    public ClienteDTO buscarClientePorId(Long id) {
+        return clienteRepositorio.findById(id)
+                .map(cliente -> modelMapper.map(cliente, ClienteDTO.class))
+                .orElseThrow(() -> new RuntimeException("Cliente con ID " + id + " no encontrado"));
+    }
+
+    @Override
+    public ClienteDTO buscarClientePorDni(String dni) {
         Cliente cliente = clienteRepositorio.findByDni(dni);
         if (cliente == null) {
-            throw new ClienteNotFoundException("Cliente con DNI " + dni + " no encontrado");
+            throw new RuntimeException("Cliente con DNI " + dni + " no encontrado");
         }
-        clienteRepositorio.delete(cliente);
+        return modelMapper.map(cliente, ClienteDTO.class);
     }
 
     @Override
-    public ClienteDTO buscarPorDni(String dni) {
-        Cliente cliente = clienteRepositorio.findByDni(dni);
+    public ClienteDTO buscarClientePorEmail(String email) {
+        Cliente cliente = clienteRepositorio.findByEmail(email);
         if (cliente == null) {
-            throw new ClienteNotFoundException("Cliente con DNI " + dni + " no encontrado");
+            throw new RuntimeException("Cliente con email " + email + " no encontrado");
         }
-        return modelMapper.map(cliente, ClienteDTO.class); // Convertir a DTO
+        return modelMapper.map(cliente, ClienteDTO.class);
     }
 
     @Override
-    public List<ClienteDTO> buscarTodos() {
-        List<Cliente> clientes = clienteRepositorio.findAll();
-        return clientes.stream()
-                .map(cliente -> modelMapper.map(cliente, ClienteDTO.class)) // Convertir a DTO
+    public List<ClienteDTO> listarClientes() {
+        return clienteRepositorio.findAll().stream()
+                .map(cliente -> modelMapper.map(cliente, ClienteDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ClienteDTO> buscarClientesPorNombre(String nombre) {
+        return clienteRepositorio.findByNombreContainingIgnoreCase(nombre).stream()
+                .map(cliente -> modelMapper.map(cliente, ClienteDTO.class))
                 .collect(Collectors.toList());
     }
 }
