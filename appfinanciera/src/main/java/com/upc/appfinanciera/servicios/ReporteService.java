@@ -20,25 +20,34 @@ public class ReporteService {
     }
 
     public byte[] graficoPiePorTipo(String tipo) throws Exception {
+        // Obtener los datos de la consulta
         List<Object[]> rows = repo.reportePorTipo(tipo); // [titulo, total]
 
+        // Crear el gráfico de tipo PieChart
         PieChart chart = new PieChartBuilder()
                 .width(900).height(620)
                 .title("Distribución por título — Tipo: " + tipo)
                 .build();
 
+        // Si no hay datos, agregar una serie vacía
         if (rows.isEmpty()) {
             chart.addSeries("Sin datos", 1);
             chart.getStyler().setLegendVisible(false);
             return toPng(chart);
         }
 
+        // Agregar las series al gráfico
         for (Object[] r : rows) {
             String titulo = String.valueOf(r[0]);
             double monto = ((Number) r[1]).doubleValue();
-            if (monto > 0) chart.addSeries(titulo, monto);
+            if (monto > 0) {
+                // Depuración de los datos
+                System.out.println("Titulo: " + titulo + " - Monto: " + monto);
+                chart.addSeries(titulo, monto);  // Agregar la serie con el monto
+            }
         }
 
+        // Convertir el gráfico a imagen PNG y devolverlo
         return toPng(chart);
     }
 
