@@ -83,10 +83,10 @@ public class AsesorService implements IAsesorService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<AsesorFinancieroDTO> buscarAsesoresPorEspecialidad(String especialidad) {
-        return asesorRepositorio.findByEspecialidadContainingIgnoreCase(especialidad).stream()
-                .map(asesor -> modelMapper.map(asesor, AsesorFinancieroDTO.class))
-                .collect(Collectors.toList());
-    }
+ // @Override
+ // public List<AsesorFinancieroDTO> buscarAsesoresPorEspecialidad(String especialidad) {
+ //     return asesorRepositorio.findByEspecialidadContainingIgnoreCase(especialidad).stream()
+ //             .map(asesor -> modelMapper.map(asesor, AsesorFinancieroDTO.class))
+ //             .collect(Collectors.toList());
+ // }
 }

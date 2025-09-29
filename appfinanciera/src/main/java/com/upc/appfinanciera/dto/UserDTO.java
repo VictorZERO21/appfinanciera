@@ -1,0 +1,25 @@
+package com.upc.appfinanciera.dto;
+
+import com.upc.appfinanciera.entidades.User;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserDTO {
+    private Long iduser;
+    private String dni;
+    private String nombres;
+    private String email;
+    private String password;
+    //perfil
+    private String telefono;
+    private String sobreMi;
+    private User.Rol rol; // rol
+
+
+}

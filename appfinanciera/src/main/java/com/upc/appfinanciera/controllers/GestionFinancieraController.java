@@ -23,8 +23,8 @@ public class GestionFinancieraController {
 
 
     @PostMapping
-    public GestionFinancieraDTO insertar(@RequestBody GestionFinancieraDTO gestionFinancieraDto) {
-        return gestionFinancieraService.insertar(gestionFinancieraDto);
+    public ResponseEntity<GestionFinancieraDTO> insertar(@RequestBody GestionFinancieraDTO gestionFinancieraDto) {
+        return ResponseEntity.ok(gestionFinancieraService.insertar(gestionFinancieraDto));
     }
 
 

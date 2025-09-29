@@ -3,9 +3,11 @@ package com.upc.appfinanciera.repositorios;
 import com.upc.appfinanciera.entidades.GestionFinanciera;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+@Repository
 
 public interface GestionFinancieraRepositorio extends JpaRepository<GestionFinanciera, Long> {
     // Cambiar a la propiedad idCliente

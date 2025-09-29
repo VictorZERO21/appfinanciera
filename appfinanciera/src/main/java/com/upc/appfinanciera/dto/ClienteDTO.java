@@ -1,5 +1,7 @@
 package com.upc.appfinanciera.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -21,12 +23,15 @@ public class ClienteDTO {
     @NotNull(message = "El nombre no puede estar vacío")
     @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
     private String nombre;
+    private String password;
+
 
     @Email(message = "El correo electrónico debe ser válido")
     private String email;
+    private String sobreMi;
+
 
     @Size(max = 9, message = "El teléfono no debe superar los 9 dígitos")
     private String telefono;
 
-    private String tipo;
 }

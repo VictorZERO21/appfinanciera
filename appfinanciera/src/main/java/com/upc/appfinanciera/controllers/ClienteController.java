@@ -1,8 +1,11 @@
 package com.upc.appfinanciera.controllers;
 
 import com.upc.appfinanciera.dto.ClienteDTO;
+import com.upc.appfinanciera.interfaces.IClienteService;
 import com.upc.appfinanciera.servicios.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

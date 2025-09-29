@@ -1,8 +1,11 @@
 package com.upc.appfinanciera.controllers;
 
 import com.upc.appfinanciera.dto.AsesorFinancieroDTO;
+import com.upc.appfinanciera.interfaces.IAsesorService;
 import com.upc.appfinanciera.servicios.AsesorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,9 +57,9 @@ public class AsesorController {
         return ResponseEntity.ok(asesorService.buscarAsesoresPorNombre(nombre));
     }
 
-    @GetMapping("/especialidad/{especialidad}")
-    public ResponseEntity<List<AsesorFinancieroDTO>> buscarPorEspecialidad(@PathVariable String especialidad) {
-        return ResponseEntity.ok(asesorService.buscarAsesoresPorEspecialidad(especialidad));
-    }
+  // @GetMapping("/especialidad/{especialidad}")
+  // public ResponseEntity<List<AsesorFinancieroDTO>> buscarPorEspecialidad(@PathVariable String especialidad) {
+  //     return ResponseEntity.ok(asesorService.buscarAsesoresPorEspecialidad(especialidad));
+  // }
 }
 

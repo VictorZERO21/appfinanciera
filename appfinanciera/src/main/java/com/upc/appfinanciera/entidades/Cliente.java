@@ -21,11 +21,17 @@ public class Cliente {
 
     @Column(length = 100, nullable = false)
     private String nombre;
+    private String password;
 
     private String email;
-    private String telefono;
 
-    private String tipo;
+    private String telefono;
+    private String sobreMi;
+
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
 
 }
 

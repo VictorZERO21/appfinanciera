@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.java.Log;
 
 import java.util.List;
 
@@ -25,13 +26,17 @@ public class AsesorFinanciero {
     @Column(length = 100, nullable = false)
     private String nombre;
 
-    private String especialidad;
-    private String experiencia;
+    private String telefono;
+
+    private String password;
+
     private String email;
+    private String sobreMi;
 
-    @OneToMany(mappedBy = "asesor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Consejo> consejos;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
 
 }
 

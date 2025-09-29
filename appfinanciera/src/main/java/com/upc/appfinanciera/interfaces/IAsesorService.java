@@ -12,6 +12,6 @@ public interface IAsesorService {
     AsesorFinancieroDTO buscarAsesorPorEmail(String email);
     List<AsesorFinancieroDTO> listarAsesores();
     List<AsesorFinancieroDTO> buscarAsesoresPorNombre(String nombre);
-    List<AsesorFinancieroDTO> buscarAsesoresPorEspecialidad(String especialidad);
+    //List<AsesorFinancieroDTO> buscarAsesoresPorEspecialidad(String especialidad);
 }
 
