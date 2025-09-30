@@ -23,9 +23,9 @@ public interface GestionFinancieraRepositorio extends JpaRepository<GestionFinan
            """)
     List<Object[]> reportePorTipo(String tipo);
 
-    @Query("SELECT g.fecha, SUM(g.monto) " +
+    @Query("SELECT g.titulo, SUM(g.monto) " +
             "FROM GestionFinanciera g " +
-            "GROUP BY g.fecha " +
-            "ORDER BY g.fecha")
+            "WHERE function('DATE', g.fecha) = :fecha " +
+            "GROUP BY g.titulo")
     List<Object[]> reportePorFecha(LocalDate fecha);
 }
