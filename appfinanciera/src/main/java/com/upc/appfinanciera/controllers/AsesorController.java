@@ -17,20 +17,20 @@ public class AsesorController {
     @Autowired
     private IAsesorService asesorService;
 
-    @PostMapping
-    public ResponseEntity<AsesorFinancieroDTO> insertar(@Valid @RequestBody AsesorFinancieroDTO asesorDTO) {
-        return ResponseEntity.ok(asesorService.insertarAsesor(asesorDTO));
-    }
+   // @PostMapping
+   // public ResponseEntity<AsesorFinancieroDTO> insertar(@Valid @RequestBody AsesorFinancieroDTO asesorDTO) {
+   //     return ResponseEntity.ok(asesorService.insertarAsesor(asesorDTO));
+   // }
 
-    @PutMapping
-    public ResponseEntity<AsesorFinancieroDTO> modificar(@Valid @RequestBody AsesorFinancieroDTO asesorDTO) {
-        return ResponseEntity.ok(asesorService.modificarAsesor(asesorDTO));
-    }
+   // @PutMapping
+   // public ResponseEntity<AsesorFinancieroDTO> modificar(@Valid @RequestBody AsesorFinancieroDTO asesorDTO) {
+   //     return ResponseEntity.ok(asesorService.modificarAsesor(asesorDTO));
+   // }
 
-    @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
-        asesorService.eliminarAsesor(id);
-    }
+   //@DeleteMapping("/{id}")
+   //public void eliminar(@PathVariable Long id) {
+   //    asesorService.eliminarAsesor(id);
+   //}
 
     @GetMapping("/{id}")
     public ResponseEntity<AsesorFinancieroDTO> buscarPorId(@PathVariable Long id) {

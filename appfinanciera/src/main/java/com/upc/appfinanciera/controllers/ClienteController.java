@@ -17,20 +17,20 @@ public class ClienteController {
     @Autowired
     private IClienteService clienteService;
 
-    @PostMapping
-    public ResponseEntity<ClienteDTO> insertar(@Valid @RequestBody ClienteDTO clienteDTO) {
-        return ResponseEntity.ok(clienteService.insertarCliente(clienteDTO));
-    }
+   // @PostMapping
+   // public ResponseEntity<ClienteDTO> insertar(@Valid @RequestBody ClienteDTO clienteDTO) {
+   //     return ResponseEntity.ok(clienteService.insertarCliente(clienteDTO));
+   // }
 
-    @PutMapping
-    public ResponseEntity<ClienteDTO> modificar(@Valid @RequestBody ClienteDTO clienteDTO) {
-        return ResponseEntity.ok(clienteService.modificarCliente(clienteDTO));
-    }
+   // @PutMapping
+   // public ResponseEntity<ClienteDTO> modificar(@Valid @RequestBody ClienteDTO clienteDTO) {
+   //     return ResponseEntity.ok(clienteService.modificarCliente(clienteDTO));
+   // }
 
-    @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
-        clienteService.eliminarCliente(id);
-    }
+   // @DeleteMapping("/{id}")
+   // public void eliminar(@PathVariable Long id) {
+   //     clienteService.eliminarCliente(id);
+   // }
 
     @GetMapping("/{id}")
     public ResponseEntity<ClienteDTO> buscarPorId(@PathVariable Long id) {

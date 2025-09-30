@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00f4d8af-2752-4e9a-816a-4ef8bfd26c2f" name="Changes" comment="Creación de Login">
+    <list default="true" id="00f4d8af-2752-4e9a-816a-4ef8bfd26c2f" name="Changes" comment="Cambio en reporte">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/repositorios/GestionFinancieraRepositorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/repositorios/GestionFinancieraRepositorio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/Pago.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/Pago.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +119,8 @@
       <workItem from="1758636003656" duration="850000" />
       <workItem from="1758686582918" duration="10000" />
       <workItem from="1759162362990" duration="10108000" />
-      <workItem from="1759203318860" duration="2418000" />
+      <workItem from="1759203318860" duration="4082000" />
+      <workItem from="1759255600303" duration="4350000" />
     </task>
     <task id="LOCAL-00001" summary="Reportes">
       <option name="closed" value="true" />
@@ -144,7 +146,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759171932398</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Cambio en reporte">
+      <option name="closed" value="true" />
+      <created>1759207479845</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1759207479845</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,6 +163,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Reportes" />
     <MESSAGE value="Creación de Login" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creación de Login" />
+    <MESSAGE value="Cambio en reporte" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cambio en reporte" />
   </component>
 </project>
