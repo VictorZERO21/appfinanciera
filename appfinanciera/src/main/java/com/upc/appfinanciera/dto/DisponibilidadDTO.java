@@ -18,6 +18,12 @@ public class DisponibilidadDTO {
     @NotNull(message = "La fecha no puede ser nula")
     private LocalDate fecha;
 
+    @NotNull(message = "La hora de inicio no puede ser nula")
+    private LocalTime horaInicio;
+
+    @NotNull(message = "La hora de fin no puede ser nula")
+    private LocalTime horaFin;
+
     @NotNull(message = "El campo disponible no puede ser nulo")
     private Boolean disponible;
 
