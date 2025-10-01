@@ -85,4 +85,25 @@ public class ChatService implements IChatServicie {
     public void eliminar(Long id) {
         chatRepositorio.deleteById(id);
     }
+
+    @Override
+    public List<ChatDTO> listarPorClienteYAsesor(Long idCliente, Long idAsesor) {
+        return chatRepositorio.findByCliente_IdClienteAndAsesor_IdAsesor(idCliente, idAsesor)
+                .stream()
+                .map(this::entityDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ChatDTO> listarPorAsesor(Long idAsesor) {
+        return chatRepositorio.findByAsesor_IdAsesor(idAsesor)
+                .stream()
+                .map(this::entityDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Long> listarClientesDeAsesor(Long idAsesor) {
+        return chatRepositorio.findDistinctClientesByAsesor(idAsesor);
+    }
 }
