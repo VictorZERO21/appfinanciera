@@ -6,6 +6,7 @@ import com.upc.appfinanciera.interfaces.IChatServicie;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,4 +40,19 @@ public class ChatController {
     public void Eliminar(@PathVariable Long id) {
         chatServicie.eliminar(id);
     }
+
+    @GetMapping("/conversacion/{idCliente}/{idAsesor}")
+    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
+    public ResponseEntity<List<ChatDTO>> ListarPorClienteYAsesor(
+            @PathVariable Long idCliente,
+            @PathVariable Long idAsesor) {
+        return ResponseEntity.ok(chatServicie.listarPorClienteYAsesor(idCliente, idAsesor));
+    }
+
+    @GetMapping("/asesor/{idAsesor}")
+    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
+    public ResponseEntity<List<Long>> ListarClientesPorAsesor(@PathVariable Long idAsesor) {
+        return ResponseEntity.ok(chatServicie.listarClientesDeAsesor(idAsesor));
+    }
+
 }
