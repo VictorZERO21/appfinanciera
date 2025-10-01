@@ -1,6 +1,6 @@
 package com.upc.appfinanciera.dto;
 
-import com.upc.appfinanciera.entidades.User;
+import com.upc.appfinanciera.entidades.Perfil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class PerfilDTO {
     private Long iduser;
     private String dni;
     private String nombres;
@@ -19,7 +19,7 @@ public class UserDTO {
     //perfil
     private String telefono;
     private String sobreMi;
-    private User.Rol rol; // rol
+    private Perfil.Rol rol; // rol
 
 
 }

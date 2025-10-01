@@ -6,11 +6,13 @@ import com.upc.appfinanciera.servicios.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "${ip.frontend}", allowCredentials = "true", exposedHeaders = "Authorization") //para cloud
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
@@ -33,26 +35,27 @@ public class ClienteController {
    // }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteDTO> buscarPorId(@PathVariable Long id) {
+    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")    public ResponseEntity<ClienteDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.buscarClientePorId(id));
     }
 
     @GetMapping("/dni/{dni}")
-    public ResponseEntity<ClienteDTO> buscarPorDni(@PathVariable String dni) {
+    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")    public ResponseEntity<ClienteDTO> buscarPorDni(@PathVariable String dni) {
         return ResponseEntity.ok(clienteService.buscarClientePorDni(dni));
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<ClienteDTO> buscarPorEmail(@PathVariable String email) {
+    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")    public ResponseEntity<ClienteDTO> buscarPorEmail(@PathVariable String email) {
         return ResponseEntity.ok(clienteService.buscarClientePorEmail(email));
     }
 
     @GetMapping
-    public ResponseEntity<List<ClienteDTO>> listar() {
+    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")    public ResponseEntity<List<ClienteDTO>> listar() {
         return ResponseEntity.ok(clienteService.listarClientes());
     }
 
     @GetMapping("/nombre/{nombre}")
+    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public ResponseEntity<List<ClienteDTO>> buscarPorNombre(@PathVariable String nombre) {
         return ResponseEntity.ok(clienteService.buscarClientesPorNombre(nombre));
     }

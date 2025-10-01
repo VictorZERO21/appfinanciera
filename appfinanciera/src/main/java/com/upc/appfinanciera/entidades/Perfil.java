@@ -11,8 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "usuarios")
-public class User {
+public class Perfil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
@@ -43,4 +42,10 @@ public class User {
         CLIENTE,
         ASESOR
     }
+
+    //security
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private com.upc.appfinanciera.security.entities.User securityUser;
+
 }

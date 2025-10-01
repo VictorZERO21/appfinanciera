@@ -5,9 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.java.Log;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -36,7 +33,7 @@ public class AsesorFinanciero {
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private User user;
+    private Perfil user;
 
 }
 
