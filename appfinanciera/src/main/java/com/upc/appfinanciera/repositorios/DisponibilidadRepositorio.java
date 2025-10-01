@@ -9,4 +9,7 @@ import java.util.List;
 
 public interface DisponibilidadRepositorio extends JpaRepository<Disponibilidad, Long> {
     List<Disponibilidad> findByAsesorFinancieroIdAsesor(Long idAsesor);
+    Optional<Disponibilidad> findByAsesorFinanciero_IdAsesorAndFechaAndHoraInicioAndHoraFin(
+            Long idAsesor, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin
+    );
 }
