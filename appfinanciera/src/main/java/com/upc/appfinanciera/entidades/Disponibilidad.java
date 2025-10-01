@@ -15,13 +15,18 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Disponibilidad {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDisponibilidad;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate fecha; 
+    private LocalDate fecha;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime horaInicio;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    private LocalTime horaFin;
 
     private boolean disponible;
 
