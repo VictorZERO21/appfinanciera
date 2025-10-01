@@ -12,5 +12,8 @@ public interface ReservaRepositorio extends JpaRepository<Reserva, Long> {
     List<Reserva> findByCliente_Dni(String dniCliente);
     List<Reserva> findByAsesor_IdAsesor(Long idAsesor);
     List<Reserva> findByAsesor_Dni(String dniAsesor);
+    boolean existsByAsesor_IdAsesorAndFechaHoraInicioLessThanEqualAndFechaHoraFinGreaterThanEqual(
+            Long idAsesor, LocalDateTime fin, LocalDateTime inicio);
 
 }
+
