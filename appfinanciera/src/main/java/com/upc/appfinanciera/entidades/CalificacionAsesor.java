@@ -14,20 +14,16 @@ import lombok.Setter;
 public class CalificacionAsesor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idDisponibilidad;
+    private Long idCalificacion;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate fecha;
+    @ManyToOne
+    @JoinColumn(name = "idAsesor", nullable = false)
+    private AsesorFinanciero asesor;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-    private LocalTime horaInicio;
+    @ManyToOne
+    @JoinColumn(name = "idCliente", nullable = false)
+    private Cliente cliente;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-    private LocalTime horaFin;
-
-    private boolean disponible;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_asesor", referencedColumnName = "idAsesor")
-    private AsesorFinanciero asesorFinanciero;
+    private int puntuacion;
+    private String comentario;
 }
