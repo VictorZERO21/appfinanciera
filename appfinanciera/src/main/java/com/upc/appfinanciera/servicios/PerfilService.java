@@ -69,6 +69,7 @@ public class PerfilService implements IUserService {
                 c.setDni(perfilDTO.getDni());
                 c.setNombre(perfilDTO.getNombres());
                 c.setEmail(perfilDTO.getEmail());
+                c.setPassword(perfilDTO.getPassword());
                 c.setTelefono(perfilDTO.getTelefono());
                 c.setUser(user);
                 clienteRepositorio.save(c);
@@ -81,6 +82,7 @@ public class PerfilService implements IUserService {
                 a.setDni(perfilDTO.getDni());
                 a.setNombre(perfilDTO.getNombres());
                 a.setEmail(perfilDTO.getEmail());
+                a.setPassword(perfilDTO.getPassword());
                 a.setTelefono(perfilDTO.getTelefono());
                 a.setUser(user);
                 asesorRepositorio.save(a);

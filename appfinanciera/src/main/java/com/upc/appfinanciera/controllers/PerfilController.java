@@ -20,7 +20,6 @@ public class PerfilController {
     private IUserService userService;
 
     @PostMapping("/registro")
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public ResponseEntity<PerfilDTO> insertar(@Valid @RequestBody PerfilDTO perfilDTO) {
         return ResponseEntity.ok(userService.registrarUser(perfilDTO));
     }
