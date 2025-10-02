@@ -4,6 +4,7 @@ import com.upc.appfinanciera.entidades.Reserva;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Repository
 
@@ -14,6 +15,4 @@ public interface ReservaRepositorio extends JpaRepository<Reserva, Long> {
     List<Reserva> findByAsesor_Dni(String dniAsesor);
     boolean existsByAsesor_IdAsesorAndFechaHoraInicioLessThanEqualAndFechaHoraFinGreaterThanEqual(
             Long idAsesor, LocalDateTime fin, LocalDateTime inicio);
-
 }
-
