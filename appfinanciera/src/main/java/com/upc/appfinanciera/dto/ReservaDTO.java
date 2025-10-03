@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -36,7 +35,7 @@ public class ReservaDTO {
     private AsesorFinancieroDTO asesor;
     @NotNull(message = "El pago es obligatorio")
     @Valid
-    private PagoDTO pago;
+    private TarjetaDTO tarjeta;
     @Positive(message = "El monto debe ser mayor que 0")
     private double montoTotal;
 }
