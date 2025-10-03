@@ -10,12 +10,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class DisponibilidadService implements IDisponibilidadService {
-
     @Autowired
     private DisponibilidadRepositorio disponibilidadRepositorio;
 
@@ -26,31 +27,33 @@ public class DisponibilidadService implements IDisponibilidadService {
     private ModelMapper modelMapper;
 
     @Override
-    public DisponibilidadDTO insertar(DisponibilidadDTO disponibilidadDto) {
+    public List<DisponibilidadDTO> insertar(DisponibilidadDTO disponibilidadDto) {
         AsesorFinanciero asesor = asesorRepositorio.findById(disponibilidadDto.getIdAsesor())
-                .orElseThrow(() -> new RuntimeException(
-                        "Asesor no encontrado con id: " + disponibilidadDto.getIdAsesor()));
-        // Validar duplicados en el mismo rango de horario
-        disponibilidadRepositorio
-                .findByAsesorFinanciero_IdAsesorAndFechaAndHoraInicioAndHoraFin(
-                        asesor.getIdAsesor(),
-                        disponibilidadDto.getFecha(),
-                        disponibilidadDto.getHoraInicio(),
-                        disponibilidadDto.getHoraFin()
-                )
-                .ifPresent(d -> {
-                    throw new RuntimeException("Ya existe disponibilidad registrada en ese horario para el asesor");
-                });
+                .orElseThrow(() -> new RuntimeException("Asesor no encontrado con id: " + disponibilidadDto.getIdAsesor()));
 
-        Disponibilidad disponibilidad = new Disponibilidad();
-        disponibilidad.setFecha(disponibilidadDto.getFecha());
-        disponibilidad.setHoraInicio(disponibilidadDto.getHoraInicio());
-        disponibilidad.setHoraFin(disponibilidadDto.getHoraFin());
-        disponibilidad.setDisponible(disponibilidadDto.getDisponible());
-        disponibilidad.setAsesorFinanciero(asesor);
+        LocalTime inicio = disponibilidadDto.getHoraInicio();
+        LocalTime fin = disponibilidadDto.getHoraFin();
 
-        Disponibilidad guardado = disponibilidadRepositorio.save(disponibilidad);
-        return entityToDto(guardado);
+        List<DisponibilidadDTO> bloques = new ArrayList<>();
+
+        while (inicio.isBefore(fin)) {
+            LocalTime bloqueFin = inicio.plusHours(2);
+            if (bloqueFin.isAfter(fin)) bloqueFin = fin; // último bloque si sobra menos de 2h
+
+            Disponibilidad disponibilidad = new Disponibilidad();
+            disponibilidad.setFecha(disponibilidadDto.getFecha());
+            disponibilidad.setHoraInicio(inicio);
+            disponibilidad.setHoraFin(bloqueFin);
+            disponibilidad.setDisponible(true);
+            disponibilidad.setAsesorFinanciero(asesor);
+
+            Disponibilidad guardado = disponibilidadRepositorio.save(disponibilidad);
+            bloques.add(entityToDto(guardado));
+
+            inicio = bloqueFin;
+        }
+
+        return bloques;
     }
 
     @Override
