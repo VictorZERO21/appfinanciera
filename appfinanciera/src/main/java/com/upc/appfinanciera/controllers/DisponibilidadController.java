@@ -20,9 +20,9 @@ public class DisponibilidadController {
 
     @PostMapping
     @PreAuthorize("hasRole('ASESOR')")
-    public ResponseEntity<DisponibilidadDTO> insertar(@RequestBody DisponibilidadDTO disponibilidadDto) {
-        DisponibilidadDTO nuevaDisponibilidad = disponibilidadService.insertar(disponibilidadDto);
-        return new ResponseEntity<>(nuevaDisponibilidad, HttpStatus.CREATED);
+    public ResponseEntity<List<DisponibilidadDTO>> insertar(@RequestBody DisponibilidadDTO disponibilidadDto) {
+        List<DisponibilidadDTO> nuevasDisponibilidades = disponibilidadService.insertar(disponibilidadDto);
+        return new ResponseEntity<>(nuevasDisponibilidades, HttpStatus.CREATED);
     }
 
     @GetMapping
