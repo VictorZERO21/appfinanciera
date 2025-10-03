@@ -7,8 +7,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PagoDTO {
-    private Long idPago;
+public class TarjetaDTO {
+    private Long idTarjeta;
 
     @NotBlank(message = "El nombre del titular no puede estar vacío")
     private String nombreTarjeta;
