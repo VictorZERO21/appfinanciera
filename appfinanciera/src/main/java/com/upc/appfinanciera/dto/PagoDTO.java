@@ -27,6 +27,4 @@ public class PagoDTO {
     @NotBlank(message = "El CVC no puede estar vacío")
     @Pattern(regexp = "\\d{3,4}", message = "El CVC debe tener 3 o 4 dígitos")
     private String cvc;
-
-    private double montoTotal;
 }
