@@ -15,15 +15,13 @@ public class CalificacionAsesor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCalificacion;
-
-    @ManyToOne
-    @JoinColumn(name = "idAsesor", nullable = false)
-    private AsesorFinanciero asesor;
-
-    @ManyToOne
-    @JoinColumn(name = "idCliente", nullable = false)
-    private Cliente cliente;
-
-    private int puntuacion;
+    @Column(nullable = false)
+    private Integer puntuacion;
     private String comentario;
+    @ManyToOne
+    @JoinColumn(name = "id_asesor", nullable = false)
+    private AsesorFinanciero asesor;
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private Cliente cliente;
 }
