@@ -16,13 +16,9 @@ public class Pago {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPago;
-
     private String nombreTarjeta;
     private String numeroTarjeta;
-
     private int mesExpiracion;
     private int anioExpiracion;
-
     private String cvc;
-    private double montoTotal;
 }
