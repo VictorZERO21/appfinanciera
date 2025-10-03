@@ -1,3 +1,5 @@
+package com.upc.appfinanciera.entidades;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
