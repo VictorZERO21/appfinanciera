@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -32,9 +31,8 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "idAsesor", referencedColumnName = "idAsesor")
     private AsesorFinanciero asesor;
-
     @OneToOne
-    @JoinColumn(name = "idPago")
-    private Pago pago;
+    @JoinColumn(name = "idTarjeta")
+    private Tarjeta tarjeta;
+    private double montoTotal;
 }
-
