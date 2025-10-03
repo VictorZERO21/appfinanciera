@@ -14,17 +14,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CalificacionAsesorDTO {
     private Long idCalificacion;
-
-    @NotNull(message = "El id del asesor no puede ser nulo")
-    private Long idAsesor;
-
-    @NotNull(message = "El id del cliente no puede ser nulo")
-    private Long idCliente;
-
+    @NotNull(message = "La puntuación es obligatoria")
     @Min(value = 1, message = "La puntuación mínima es 1")
     @Max(value = 5, message = "La puntuación máxima es 5")
-    private int puntuacion;
-
-    @NotNull(message = "Debe agregar al menos un comentario corto")
+    private Integer puntuacion;
     private String comentario;
+    @NotNull(message = "El asesor es obligatorio")
+    private Long idAsesor;
+    @NotNull(message = "El cliente es obligatorio")
+    private Long idCliente;
 }
