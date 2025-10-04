@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,11 +37,14 @@ public class CalificacionAsesorService implements ICalificacionAsesorService {
 
     @Override
     public CalificacionAsesorDTO insertar(CalificacionAsesorDTO dto) {
-        boolean existeReservaFinalizada = reservaRepositorio
-                .existsByAsesor_IdAsesorAndCliente_IdClienteAndEstado(dto.getIdAsesor(), dto.getIdCliente(), "Finalizada");
-        if (!existeReservaFinalizada) {
-            throw new RuntimeException("Solo puedes calificar si ya tuviste una reserva finalizada con este asesor");
+        Reserva ultimaReserva = reservaRepositorio
+                .findTopByCliente_IdClienteAndAsesor_IdAsesorOrderByFechaHoraFinDesc(dto.getIdCliente(), dto.getIdAsesor())
+                .orElseThrow(() -> new RuntimeException("No tienes reservas con este asesor"));
+
+        if (ultimaReserva.getFechaHoraFin().isAfter(LocalDateTime.now())) {
+            throw new RuntimeException("Solo puedes calificar después de que la reserva haya terminado");
         }
+
         AsesorFinanciero asesor = asesorRepositorio.findById(dto.getIdAsesor())
                 .orElseThrow(() -> new RuntimeException("Asesor no encontrado"));
 
@@ -52,6 +56,7 @@ public class CalificacionAsesorService implements ICalificacionAsesorService {
         calificacion.setCliente(cliente);
         calificacion.setPuntuacion(dto.getPuntuacion());
         calificacion.setComentario(dto.getComentario());
+
         CalificacionAsesor saved = calificacionRepositorio.save(calificacion);
         return modelMapper.map(saved, CalificacionAsesorDTO.class);
     }
