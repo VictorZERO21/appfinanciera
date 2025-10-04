@@ -51,8 +51,8 @@ public class ChatController {
 
     @GetMapping("/asesor/{idAsesor}")
     @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
-    public ResponseEntity<List<Long>> ListarClientesPorAsesor(@PathVariable Long idAsesor) {
-        return ResponseEntity.ok(chatServicie.listarClientesDeAsesor(idAsesor));
+    public List<ChatDTO> ListarClientesPorAsesor(@PathVariable Long idAsesor) {
+        return chatServicie.listarPorAsesor(idAsesor);
     }
 
 }
