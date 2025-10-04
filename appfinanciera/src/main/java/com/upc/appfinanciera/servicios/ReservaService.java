@@ -125,9 +125,25 @@ public class ReservaService implements IReservaService {
 
     @Override
     public void eliminarReserva(Long id) {
-        if (!reservaRepositorio.existsById(id)) {
-            throw new RuntimeException("Reserva no encontrada con ID: " + id);
-        }
+        Reserva reserva = reservaRepositorio.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + id));
+
+        Long idAsesor = reserva.getAsesor().getIdAsesor();
+        LocalDate fechaReserva = reserva.getFechaHoraInicio().toLocalDate();
+        LocalTime horaInicio = reserva.getFechaHoraInicio().toLocalTime();
+        LocalTime horaFin = reserva.getFechaHoraFin().toLocalTime();
+
+        Disponibilidad disponibilidad = disponibilidadRepositorio
+                .findByAsesorFinanciero_IdAsesorAndFechaAndHoraInicioAndHoraFin(
+                        idAsesor, fechaReserva, horaInicio, horaFin
+                )
+                .orElseThrow(() -> new RuntimeException(
+                        "No se encontró la disponibilidad del asesor con ID " + idAsesor +
+                                " en " + fechaReserva + " de " + horaInicio + " a " + horaFin));
+
+        disponibilidad.setDisponible(true);
+        disponibilidadRepositorio.save(disponibilidad);
+
         reservaRepositorio.deleteById(id);
     }
 
