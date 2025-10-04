@@ -1,11 +1,11 @@
-package com.upc.appfinanciera.repositorios;
-
 import com.upc.appfinanciera.entidades.Reserva;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 
 public interface ReservaRepositorio extends JpaRepository<Reserva, Long> {
@@ -17,4 +17,5 @@ public interface ReservaRepositorio extends JpaRepository<Reserva, Long> {
             Long idAsesor, LocalDateTime fin, LocalDateTime inicio);
     boolean existsByAsesor_IdAsesorAndCliente_IdClienteAndEstado(
             Long idAsesor, Long idCliente, String estado);
+    Optional<Reserva> findTopByCliente_IdClienteAndAsesor_IdAsesorOrderByFechaHoraFinDesc(Long idCliente, Long idAsesor);
 }
