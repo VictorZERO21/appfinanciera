@@ -26,36 +26,39 @@ public class GestionFinancieraService implements IGestionFinancieraService {
 
     @Autowired
     private ModelMapper modelMapper;
-
+    
     @Override
     public GestionFinancieraDTO insertar(GestionFinancieraDTO gestionFinancieraDTO) {
-        // Obtener el Cliente completo desde el DTO (ya que es un objeto completo)
-        Cliente cliente = modelMapper.map(gestionFinancieraDTO.getCliente(), Cliente.class);  // Mapea de ClienteDTO a Cliente
+        Cliente cliente = clienteRepositorio.findById(gestionFinancieraDTO.getCliente().getIdCliente())
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con ID: "
+                        + gestionFinancieraDTO.getCliente().getIdCliente()));
 
-        // Crear la nueva entidad GestionFinanciera
         GestionFinanciera gestionFinanciera = new GestionFinanciera();
         gestionFinanciera.setTitulo(gestionFinancieraDTO.getTitulo());
         gestionFinanciera.setTipo(gestionFinancieraDTO.getTipo());
         gestionFinanciera.setMonto(gestionFinancieraDTO.getMonto());
         gestionFinanciera.setFecha(gestionFinancieraDTO.getFecha());
-        gestionFinanciera.setCliente(cliente);  // Asociar el Cliente completo
-
-        // Guardar la gestión financiera en la base de datos
+        gestionFinanciera.setCliente(cliente);
         GestionFinanciera savedGestionFinanciera = gestionFinancieraRepositorio.save(gestionFinanciera);
-
-        // Convertir la entidad guardada en un DTO y devolver
         return modelMapper.map(savedGestionFinanciera, GestionFinancieraDTO.class);
     }
 
-    @Override
     public GestionFinancieraDTO actualizar(GestionFinancieraDTO gestionFinancieraDto) {
-        return gestionFinancieraRepositorio.findById(gestionFinancieraDto.getIdGestion())
-                .map(existing -> {
-                    GestionFinanciera gestionEntidad = modelMapper.map(gestionFinancieraDto, GestionFinanciera.class);
-                    GestionFinanciera guardado = gestionFinancieraRepositorio.save(gestionEntidad);
-                    return modelMapper.map(guardado, GestionFinancieraDTO.class); // Convertir a DTO
-                })
-                .orElseThrow(() -> new GestionFinancieraNotFoundException("Gestión con ID " + gestionFinancieraDto.getIdGestion() + " no encontrada"));
+        GestionFinanciera existente = gestionFinancieraRepositorio.findById(gestionFinancieraDto.getIdGestion())
+                .orElseThrow(() -> new GestionFinancieraNotFoundException(
+                        "Gestión con ID " + gestionFinancieraDto.getIdGestion() + " no encontrada"));
+        Cliente cliente = clienteRepositorio.findById(gestionFinancieraDto.getCliente().getIdCliente())
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con ID: "
+                        + gestionFinancieraDto.getCliente().getIdCliente()));
+        existente.setTitulo(gestionFinancieraDto.getTitulo());
+        existente.setTipo(gestionFinancieraDto.getTipo());
+        existente.setMonto(gestionFinancieraDto.getMonto());
+        existente.setFecha(gestionFinancieraDto.getFecha());
+        existente.setCliente(cliente);
+        GestionFinanciera actualizado = gestionFinancieraRepositorio.save(existente);
+        GestionFinancieraDTO dto = modelMapper.map(actualizado, GestionFinancieraDTO.class);
+        dto.setCliente(modelMapper.map(cliente, ClienteDTO.class));
+        return dto;
     }
 
     @Override
