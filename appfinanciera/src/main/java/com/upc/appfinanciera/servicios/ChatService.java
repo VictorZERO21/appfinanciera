@@ -1,6 +1,8 @@
 package com.upc.appfinanciera.servicios;
 
+import com.upc.appfinanciera.dto.AsesorFinancieroDTO;
 import com.upc.appfinanciera.dto.ChatDTO;
+import com.upc.appfinanciera.dto.ClienteDTO;
 import com.upc.appfinanciera.entidades.AsesorFinanciero;
 import com.upc.appfinanciera.entidades.Chat;
 import com.upc.appfinanciera.entidades.Cliente;
@@ -29,20 +31,29 @@ public class ChatService implements IChatServicie {
     @Autowired
     private ModelMapper modelMapper;
 
-    private ChatDTO entityDTO(Chat chat)
-    {
-        ChatDTO dto = modelMapper.map(chat, ChatDTO.class);
-        dto.setIdAsesor(chat.getAsesor().getIdAsesor());
-        dto.setIdCliente(chat.getCliente().getIdCliente());
+    private ChatDTO entityDTO(Chat chat) {
+        ChatDTO dto = new ChatDTO();
+        dto.setIdChat(chat.getIdChat());
+        dto.setComentario(chat.getComentario());
+        dto.setFechaHora(chat.getFechaHora());
+
+        dto.setCliente(modelMapper.map(chat.getCliente(), ClienteDTO.class));
+        dto.setAsesor(modelMapper.map(chat.getAsesor(), AsesorFinancieroDTO.class));
+
         return dto;
     }
 
     @Override
     public ChatDTO insertar(ChatDTO chatDTO) {
-        Cliente cliente = clienteRepositorio.findById(chatDTO.getIdCliente())
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado" + chatDTO.getIdCliente()));
-        AsesorFinanciero asesor = asesorRepositorio.findById(chatDTO.getIdAsesor())
-                .orElseThrow(() -> new RuntimeException("Asesor no encontrado" + chatDTO.getIdAsesor()));
+        Long idCliente = chatDTO.getCliente().getIdCliente();
+        Long idAsesor = chatDTO.getAsesor().getIdAsesor();
+
+        Cliente cliente = clienteRepositorio.findById(idCliente)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con id: " + idCliente));
+
+        AsesorFinanciero asesor = asesorRepositorio.findById(idAsesor)
+                .orElseThrow(() -> new RuntimeException("Asesor no encontrado con id: " + idAsesor));
+
         Chat chat = new Chat();
         chat.setCliente(cliente);
         chat.setAsesor(asesor);
@@ -55,26 +66,32 @@ public class ChatService implements IChatServicie {
     @Override
     public List<ChatDTO> listar() {
         return chatRepositorio.findAll()
-                .stream().map(this::entityDTO).collect(Collectors.toList());
+                .stream()
+                .map(this::entityDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public ChatDTO modificar(ChatDTO chatDTO) {
-        if(chatDTO.getIdChat() == null)
-        {
+        if (chatDTO.getIdChat() == null) {
             throw new RuntimeException("El id es requerido para actualizar");
         }
+
         Chat existente = chatRepositorio.findById(chatDTO.getIdChat())
                 .orElseThrow(() -> new RuntimeException("Chat no encontrado con id: " + chatDTO.getIdChat()));
 
         existente.setComentario(chatDTO.getComentario());
 
-        Cliente cliente = clienteRepositorio.findById(chatDTO.getIdCliente())
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con id: " + chatDTO.getIdCliente()));
-        existente.setCliente(cliente);
+        Long idCliente = chatDTO.getCliente().getIdCliente();
+        Long idAsesor = chatDTO.getAsesor().getIdAsesor();
 
-        AsesorFinanciero asesor = asesorRepositorio.findById(chatDTO.getIdAsesor())
-                .orElseThrow(() -> new RuntimeException("Asesor no encontrado con id: " + chatDTO.getIdAsesor()));
+        Cliente cliente = clienteRepositorio.findById(idCliente)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con id: " + idCliente));
+
+        AsesorFinanciero asesor = asesorRepositorio.findById(idAsesor)
+                .orElseThrow(() -> new RuntimeException("Asesor no encontrado con id: " + idAsesor));
+
+        existente.setCliente(cliente);
         existente.setAsesor(asesor);
 
         Chat guardado = chatRepositorio.save(existente);
