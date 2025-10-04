@@ -31,8 +31,9 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "idAsesor", referencedColumnName = "idAsesor")
     private AsesorFinanciero asesor;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idTarjeta")
     private Tarjeta tarjeta;
     private double montoTotal;
 }
+
