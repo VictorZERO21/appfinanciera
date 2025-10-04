@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ChatDTO {
     private Long idChat;
-    private Long idCliente;
-    private Long idAsesor;
+    private ClienteDTO cliente;
+    private AsesorFinancieroDTO asesor;
     private String comentario;
     private LocalDateTime fechaHora;
 }
