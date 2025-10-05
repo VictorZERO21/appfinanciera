@@ -5,6 +5,7 @@ import com.upc.appfinanciera.entidades.AsesorFinanciero;
 import com.upc.appfinanciera.entidades.CalificacionAsesor;
 import com.upc.appfinanciera.entidades.Cliente;
 import com.upc.appfinanciera.entidades.Reserva;
+import com.upc.appfinanciera.excepciones.CustomExceptions;
 import com.upc.appfinanciera.interfaces.ICalificacionAsesorService;
 import com.upc.appfinanciera.repositorios.AsesorRepositorio;
 import com.upc.appfinanciera.repositorios.CalificacionAsesorRepositorio;
@@ -39,17 +40,21 @@ public class CalificacionAsesorService implements ICalificacionAsesorService {
     public CalificacionAsesorDTO insertar(CalificacionAsesorDTO dto) {
         Reserva ultimaReserva = reservaRepositorio
                 .findTopByCliente_IdClienteAndAsesor_IdAsesorOrderByFechaHoraFinDesc(dto.getIdCliente(), dto.getIdAsesor())
-                .orElseThrow(() -> new RuntimeException("No tienes reservas con este asesor"));
+                .orElseThrow(() -> new CustomExceptions.ReservaNotFoundException(
+                        "No tienes reservas registradas con este asesor."));
 
         if (ultimaReserva.getFechaHoraFin().isAfter(LocalDateTime.now())) {
-            throw new RuntimeException("Solo puedes calificar después de que la reserva haya terminado");
+            throw new CustomExceptions.ValidationException(
+                    "Solo puedes calificar después de que la reserva haya terminado.");
         }
 
         AsesorFinanciero asesor = asesorRepositorio.findById(dto.getIdAsesor())
-                .orElseThrow(() -> new RuntimeException("Asesor no encontrado"));
+                .orElseThrow(() -> new CustomExceptions.AsesorNotFoundException(
+                        "Asesor no encontrado con ID: " + dto.getIdAsesor()));
 
         Cliente cliente = clienteRepositorio.findById(dto.getIdCliente())
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+                .orElseThrow(() -> new CustomExceptions.ClienteNotFoundException(
+                        "Cliente no encontrado con ID: " + dto.getIdCliente()));
 
         CalificacionAsesor calificacion = new CalificacionAsesor();
         calificacion.setAsesor(asesor);
@@ -57,13 +62,25 @@ public class CalificacionAsesorService implements ICalificacionAsesorService {
         calificacion.setPuntuacion(dto.getPuntuacion());
         calificacion.setComentario(dto.getComentario());
 
-        CalificacionAsesor saved = calificacionRepositorio.save(calificacion);
-        return modelMapper.map(saved, CalificacionAsesorDTO.class);
+        CalificacionAsesor guardado = calificacionRepositorio.save(calificacion);
+        return modelMapper.map(guardado, CalificacionAsesorDTO.class);
     }
+
     @Override
     public List<CalificacionAsesorDTO> listarPorAsesor(Long idAsesor) {
-        return calificacionRepositorio.findByAsesor_IdAsesor(idAsesor).stream()
+        if (!asesorRepositorio.existsById(idAsesor)) {
+            throw new CustomExceptions.AsesorNotFoundException("Asesor no encontrado con ID: " + idAsesor);
+        }
+
+        List<CalificacionAsesor> calificaciones = calificacionRepositorio.findByAsesor_IdAsesor(idAsesor);
+        if (calificaciones.isEmpty()) {
+            throw new CustomExceptions.ValidationException(
+                    "El asesor con ID " + idAsesor + " aún no tiene calificaciones registradas.");
+        }
+
+        return calificaciones.stream()
                 .map(calificacion -> modelMapper.map(calificacion, CalificacionAsesorDTO.class))
                 .collect(Collectors.toList());
     }
 }
+
