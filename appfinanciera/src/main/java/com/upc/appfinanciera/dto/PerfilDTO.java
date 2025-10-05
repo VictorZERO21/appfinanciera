@@ -16,10 +16,7 @@ public class PerfilDTO {
     private String nombres;
     private String email;
     private String password;
-    //perfil
     private String telefono;
     private String sobreMi;
-    private Perfil.Rol rol; // rol
-
-
+    private Perfil.Rol rol; 
 }
