@@ -6,6 +6,7 @@ import com.upc.appfinanciera.dto.ClienteDTO;
 import com.upc.appfinanciera.entidades.AsesorFinanciero;
 import com.upc.appfinanciera.entidades.Chat;
 import com.upc.appfinanciera.entidades.Cliente;
+import com.upc.appfinanciera.excepciones.CustomExceptions;
 import com.upc.appfinanciera.interfaces.IChatServicie;
 import com.upc.appfinanciera.repositorios.AsesorRepositorio;
 import com.upc.appfinanciera.repositorios.ChatRepositorio;
@@ -36,10 +37,8 @@ public class ChatService implements IChatServicie {
         dto.setIdChat(chat.getIdChat());
         dto.setComentario(chat.getComentario());
         dto.setFechaHora(chat.getFechaHora());
-
         dto.setCliente(modelMapper.map(chat.getCliente(), ClienteDTO.class));
         dto.setAsesor(modelMapper.map(chat.getAsesor(), AsesorFinancieroDTO.class));
-
         return dto;
     }
 
@@ -49,78 +48,68 @@ public class ChatService implements IChatServicie {
         Long idAsesor = chatDTO.getAsesor().getIdAsesor();
 
         Cliente cliente = clienteRepositorio.findById(idCliente)
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con id: " + idCliente));
+                .orElseThrow(() -> new CustomExceptions.ClienteNotFoundException(
+                        "Cliente no encontrado con ID: " + idCliente));
 
         AsesorFinanciero asesor = asesorRepositorio.findById(idAsesor)
-                .orElseThrow(() -> new RuntimeException("Asesor no encontrado con id: " + idAsesor));
+                .orElseThrow(() -> new CustomExceptions.AsesorNotFoundException(
+                        "Asesor no encontrado con ID: " + idAsesor));
 
         Chat chat = new Chat();
         chat.setCliente(cliente);
         chat.setAsesor(asesor);
         chat.setComentario(chatDTO.getComentario());
 
-        Chat save = chatRepositorio.save(chat);
-        return entityDTO(save);
+        Chat guardado = chatRepositorio.save(chat);
+        return entityDTO(guardado);
     }
 
     @Override
     public List<ChatDTO> listar() {
-        return chatRepositorio.findAll()
-                .stream()
+        List<Chat> chats = chatRepositorio.findAll();
+        if (chats.isEmpty()) {
+            throw new CustomExceptions.ValidationException("No existen conversaciones registradas.");
+        }
+        return chats.stream()
                 .map(this::entityDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public ChatDTO modificar(ChatDTO chatDTO) {
-        if (chatDTO.getIdChat() == null) {
-            throw new RuntimeException("El id es requerido para actualizar");
+    public List<ChatDTO> listarPorClienteYAsesor(Long idCliente, Long idAsesor) {
+        if (!clienteRepositorio.existsById(idCliente)) {
+            throw new CustomExceptions.ClienteNotFoundException("Cliente no encontrado con ID: " + idCliente);
+        }
+        if (!asesorRepositorio.existsById(idAsesor)) {
+            throw new CustomExceptions.AsesorNotFoundException("Asesor no encontrado con ID: " + idAsesor);
         }
 
-        Chat existente = chatRepositorio.findById(chatDTO.getIdChat())
-                .orElseThrow(() -> new RuntimeException("Chat no encontrado con id: " + chatDTO.getIdChat()));
+        List<Chat> chats = chatRepositorio.findByCliente_IdClienteAndAsesor_IdAsesor(idCliente, idAsesor);
+        if (chats.isEmpty()) {
+            throw new CustomExceptions.ValidationException(
+                    "No hay mensajes registrados entre el cliente " + idCliente + " y el asesor " + idAsesor);
+        }
 
-        existente.setComentario(chatDTO.getComentario());
-
-        Long idCliente = chatDTO.getCliente().getIdCliente();
-        Long idAsesor = chatDTO.getAsesor().getIdAsesor();
-
-        Cliente cliente = clienteRepositorio.findById(idCliente)
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con id: " + idCliente));
-
-        AsesorFinanciero asesor = asesorRepositorio.findById(idAsesor)
-                .orElseThrow(() -> new RuntimeException("Asesor no encontrado con id: " + idAsesor));
-
-        existente.setCliente(cliente);
-        existente.setAsesor(asesor);
-
-        Chat guardado = chatRepositorio.save(existente);
-        return entityDTO(guardado);
-    }
-
-    @Override
-    public void eliminar(Long id) {
-        chatRepositorio.deleteById(id);
-    }
-
-    @Override
-    public List<ChatDTO> listarPorClienteYAsesor(Long idCliente, Long idAsesor) {
-        return chatRepositorio.findByCliente_IdClienteAndAsesor_IdAsesor(idCliente, idAsesor)
-                .stream()
+        return chats.stream()
                 .map(this::entityDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<ChatDTO> listarPorAsesor(Long idAsesor) {
-        return chatRepositorio.findByAsesor_IdAsesor(idAsesor)
-                .stream()
+        if (!asesorRepositorio.existsById(idAsesor)) {
+            throw new CustomExceptions.AsesorNotFoundException("Asesor no encontrado con ID: " + idAsesor);
+        }
+
+        List<Chat> chats = chatRepositorio.findByAsesor_IdAsesor(idAsesor);
+        if (chats.isEmpty()) {
+            throw new CustomExceptions.ValidationException(
+                    "El asesor con ID " + idAsesor + " no tiene conversaciones registradas.");
+        }
+
+        return chats.stream()
                 .map(this::entityDTO)
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<Long> listarClientesDeAsesor(Long idAsesor) {
-        return chatRepositorio.findDistinctClientesByAsesor(idAsesor);
-    }
 }
