@@ -10,7 +10,5 @@ public interface IReservaService {
     ReservaDTO buscarReservaPorId(Long id);
     List<ReservaDTO> listarReservas();
     List<ReservaDTO> listarReservasPorClienteId(Long idCliente);
-    List<ReservaDTO> listarReservasPorClienteDni(String dniCliente);
     List<ReservaDTO> listarReservasPorAsesorId(Long idAsesor);
-    List<ReservaDTO> listarReservasPorAsesorDni(String dniAsesor);
 }
