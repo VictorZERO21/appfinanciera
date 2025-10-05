@@ -2,6 +2,7 @@ package com.upc.appfinanciera.servicios;
 
 import com.upc.appfinanciera.dto.TarjetaDTO;
 import com.upc.appfinanciera.entidades.Tarjeta;
+import com.upc.appfinanciera.excepciones.CustomExceptions;
 import com.upc.appfinanciera.interfaces.ITarjetaService;
 import com.upc.appfinanciera.repositorios.TarjetaRepositorio;
 import org.modelmapper.ModelMapper;
@@ -31,15 +32,17 @@ public class TarjetaService implements ITarjetaService {
         return tarjetaRepositorio.findById(tarjetaDTO.getIdTarjeta())
                 .map(existing -> {
                     Tarjeta tarjetaEntidad = modelMapper.map(tarjetaDTO, Tarjeta.class);
-                    return modelMapper.map(tarjetaRepositorio.save(tarjetaEntidad), TarjetaDTO.class);
+                    Tarjeta actualizada = tarjetaRepositorio.save(tarjetaEntidad);
+                    return modelMapper.map(actualizada, TarjetaDTO.class);
                 })
-                .orElseThrow(() -> new RuntimeException("Pago con ID " + tarjetaDTO.getIdTarjeta() + " no encontrado"));
+                .orElseThrow(() -> new CustomExceptions.PagoNotFoundException(
+                        "Pago con ID " + tarjetaDTO.getIdTarjeta() + " no encontrado"));
     }
 
     @Override
     public void eliminarTarjeta(Long id) {
         if (!tarjetaRepositorio.existsById(id)) {
-            throw new RuntimeException("Pago no encontrado con ID: " + id);
+            throw new CustomExceptions.PagoNotFoundException("Pago no encontrado con ID: " + id);
         }
         tarjetaRepositorio.deleteById(id);
     }
@@ -48,7 +51,8 @@ public class TarjetaService implements ITarjetaService {
     public TarjetaDTO buscarTarjetaPorId(Long id) {
         return tarjetaRepositorio.findById(id)
                 .map(tarjeta -> modelMapper.map(tarjeta, TarjetaDTO.class))
-                .orElseThrow(() -> new RuntimeException("Pago con ID " + id + " no encontrado"));
+                .orElseThrow(() -> new CustomExceptions.PagoNotFoundException(
+                        "Pago con ID " + id + " no encontrado"));
     }
 
     @Override
