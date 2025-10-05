@@ -19,45 +19,13 @@ public class ClienteController {
     @Autowired
     private IClienteService clienteService;
 
-   // @PostMapping
-   // public ResponseEntity<ClienteDTO> insertar(@Valid @RequestBody ClienteDTO clienteDTO) {
-   //     return ResponseEntity.ok(clienteService.insertarCliente(clienteDTO));
-   // }
-
-   // @PutMapping
-   // public ResponseEntity<ClienteDTO> modificar(@Valid @RequestBody ClienteDTO clienteDTO) {
-   //     return ResponseEntity.ok(clienteService.modificarCliente(clienteDTO));
-   // }
-
-   // @DeleteMapping("/{id}")
-   // public void eliminar(@PathVariable Long id) {
-   //     clienteService.eliminarCliente(id);
-   // }
-
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")    public ResponseEntity<ClienteDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.buscarClientePorId(id));
     }
-
-    @GetMapping("/dni/{dni}")
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")    public ResponseEntity<ClienteDTO> buscarPorDni(@PathVariable String dni) {
-        return ResponseEntity.ok(clienteService.buscarClientePorDni(dni));
-    }
-
-    @GetMapping("/email/{email}")
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")    public ResponseEntity<ClienteDTO> buscarPorEmail(@PathVariable String email) {
-        return ResponseEntity.ok(clienteService.buscarClientePorEmail(email));
-    }
-
     @GetMapping
     @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")    public ResponseEntity<List<ClienteDTO>> listar() {
         return ResponseEntity.ok(clienteService.listarClientes());
     }
 
-    @GetMapping("/nombre/{nombre}")
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
-    public ResponseEntity<List<ClienteDTO>> buscarPorNombre(@PathVariable String nombre) {
-        return ResponseEntity.ok(clienteService.buscarClientesPorNombre(nombre));
-    }
 }
-
