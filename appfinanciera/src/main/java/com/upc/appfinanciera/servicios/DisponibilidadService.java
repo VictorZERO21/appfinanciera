@@ -3,6 +3,7 @@ package com.upc.appfinanciera.servicios;
 import com.upc.appfinanciera.dto.DisponibilidadDTO;
 import com.upc.appfinanciera.entidades.AsesorFinanciero;
 import com.upc.appfinanciera.entidades.Disponibilidad;
+import com.upc.appfinanciera.excepciones.CustomExceptions;
 import com.upc.appfinanciera.interfaces.IDisponibilidadService;
 import com.upc.appfinanciera.repositorios.AsesorRepositorio;
 import com.upc.appfinanciera.repositorios.DisponibilidadRepositorio;
@@ -29,16 +30,21 @@ public class DisponibilidadService implements IDisponibilidadService {
     @Override
     public List<DisponibilidadDTO> insertar(DisponibilidadDTO disponibilidadDto) {
         AsesorFinanciero asesor = asesorRepositorio.findById(disponibilidadDto.getIdAsesor())
-                .orElseThrow(() -> new RuntimeException("Asesor no encontrado con id: " + disponibilidadDto.getIdAsesor()));
+                .orElseThrow(() -> new CustomExceptions.AsesorNotFoundException(
+                        "Asesor no encontrado con ID: " + disponibilidadDto.getIdAsesor()));
 
         LocalTime inicio = disponibilidadDto.getHoraInicio();
         LocalTime fin = disponibilidadDto.getHoraFin();
+
+        if (inicio == null || fin == null || !inicio.isBefore(fin)) {
+            throw new CustomExceptions.ValidationException("El rango de horas no es válido.");
+        }
 
         List<DisponibilidadDTO> bloques = new ArrayList<>();
 
         while (inicio.isBefore(fin)) {
             LocalTime bloqueFin = inicio.plusHours(2);
-            if (bloqueFin.isAfter(fin)) bloqueFin = fin; // último bloque si sobra menos de 2h
+            if (bloqueFin.isAfter(fin)) bloqueFin = fin;
 
             Disponibilidad disponibilidad = new Disponibilidad();
             disponibilidad.setFecha(disponibilidadDto.getFecha());
@@ -58,8 +64,11 @@ public class DisponibilidadService implements IDisponibilidadService {
 
     @Override
     public List<DisponibilidadDTO> buscarTodos() {
-        return disponibilidadRepositorio.findAll()
-                .stream()
+        List<Disponibilidad> lista = disponibilidadRepositorio.findAll();
+        if (lista.isEmpty()) {
+            throw new CustomExceptions.DisponibilidadNotFoundException("No hay disponibilidades registradas.");
+        }
+        return lista.stream()
                 .map(this::entityToDto)
                 .collect(Collectors.toList());
     }
@@ -67,10 +76,16 @@ public class DisponibilidadService implements IDisponibilidadService {
     @Override
     public List<DisponibilidadDTO> buscarPorAsesor(Long idAsesor) {
         if (!asesorRepositorio.existsById(idAsesor)) {
-            throw new RuntimeException("Asesor no encontrado con id: " + idAsesor);
+            throw new CustomExceptions.AsesorNotFoundException("Asesor no encontrado con ID: " + idAsesor);
         }
-        return disponibilidadRepositorio.findByAsesorFinancieroIdAsesor(idAsesor)
-                .stream()
+
+        List<Disponibilidad> lista = disponibilidadRepositorio.findByAsesorFinancieroIdAsesor(idAsesor);
+        if (lista.isEmpty()) {
+            throw new CustomExceptions.DisponibilidadNotFoundException(
+                    "El asesor con ID " + idAsesor + " no tiene disponibilidades registradas.");
+        }
+
+        return lista.stream()
                 .map(this::entityToDto)
                 .collect(Collectors.toList());
     }
@@ -78,7 +93,8 @@ public class DisponibilidadService implements IDisponibilidadService {
     @Override
     public void eliminar(Long idDisponibilidad) {
         if (!disponibilidadRepositorio.existsById(idDisponibilidad)) {
-            throw new RuntimeException("Disponibilidad no encontrada con id: " + idDisponibilidad);
+            throw new CustomExceptions.DisponibilidadNotFoundException(
+                    "Disponibilidad no encontrada con ID: " + idDisponibilidad);
         }
         disponibilidadRepositorio.deleteById(idDisponibilidad);
     }
@@ -86,12 +102,16 @@ public class DisponibilidadService implements IDisponibilidadService {
     @Override
     public DisponibilidadDTO actualizar(DisponibilidadDTO disponibilidadDto) {
         if (disponibilidadDto.getIdDisponibilidad() == null) {
-            throw new RuntimeException("El idDisponibilidad es requerido para actualizar.");
+            throw new CustomExceptions.ValidationException("El ID de la disponibilidad es obligatorio para actualizar.");
         }
-        Long id = disponibilidadDto.getIdDisponibilidad();
-        Disponibilidad existente = disponibilidadRepositorio.findById(id)
-                .orElseThrow(() -> new RuntimeException("Disponibilidad no encontrada con id: " + id));
 
+        Long id = disponibilidadDto.getIdDisponibilidad();
+
+        Disponibilidad existente = disponibilidadRepositorio.findById(id)
+                .orElseThrow(() -> new CustomExceptions.DisponibilidadNotFoundException(
+                        "Disponibilidad no encontrada con ID: " + id));
+
+        // Verificar duplicidad de rango horario
         disponibilidadRepositorio
                 .findByAsesorFinanciero_IdAsesorAndFechaAndHoraInicioAndHoraFin(
                         disponibilidadDto.getIdAsesor(),
@@ -101,21 +121,22 @@ public class DisponibilidadService implements IDisponibilidadService {
                 )
                 .ifPresent(d -> {
                     if (!d.getIdDisponibilidad().equals(id)) {
-                        throw new RuntimeException("Ya existe otra disponibilidad en ese rango para este asesor");
+                        throw new CustomExceptions.ValidationException(
+                                "Ya existe otra disponibilidad en ese rango horario para este asesor.");
                     }
                 });
+
         existente.setFecha(disponibilidadDto.getFecha());
         existente.setHoraInicio(disponibilidadDto.getHoraInicio());
         existente.setHoraFin(disponibilidadDto.getHoraFin());
         existente.setDisponible(disponibilidadDto.getDisponible());
 
         AsesorFinanciero asesor = asesorRepositorio.findById(disponibilidadDto.getIdAsesor())
-                .orElseThrow(() -> new RuntimeException(
-                        "Asesor no encontrado con id: " + disponibilidadDto.getIdAsesor()));
+                .orElseThrow(() -> new CustomExceptions.AsesorNotFoundException(
+                        "Asesor no encontrado con ID: " + disponibilidadDto.getIdAsesor()));
         existente.setAsesorFinanciero(asesor);
 
         Disponibilidad guardado = disponibilidadRepositorio.save(existente);
-
         return entityToDto(guardado);
     }
 
