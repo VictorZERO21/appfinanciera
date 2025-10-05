@@ -14,8 +14,6 @@ import java.util.List;
 public class CalificacionAsesorController {
     @Autowired
     private ICalificacionAsesorService calificacionService;
-
-
     @PostMapping
     @PreAuthorize("hasRole('CLIENTE')")
     public CalificacionAsesorDTO insertar(@Valid @RequestBody CalificacionAsesorDTO dto) {
