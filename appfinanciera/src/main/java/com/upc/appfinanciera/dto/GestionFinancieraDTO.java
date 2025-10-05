@@ -16,18 +16,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class GestionFinancieraDTO {
     private long idGestion;
-
     @NotNull(message = "El título no puede ser nulo")
     private String titulo;
-
     @NotNull(message = "El tipo no puede ser nulo")
     private String tipo;
-
     @Min(value = 0, message = "El monto no puede ser negativo")
     private double monto;
-
     private LocalDate fecha;
-
     @NotNull(message = "El cliente no puede ser nulo")
     private ClienteDTO cliente;
 }
