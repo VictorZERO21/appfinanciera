@@ -12,8 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CalculadoraDTO {
-    //private long idCalculadora;
-
     @NotNull(message = "El monto no puede ser nulo")
     @Min(value = 1, message = "El monto debe ser mayor a cero")
     private long monto;
