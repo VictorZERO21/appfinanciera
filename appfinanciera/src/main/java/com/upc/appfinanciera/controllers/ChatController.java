@@ -30,17 +30,6 @@ public class ChatController {
         return ResponseEntity.ok(chatServicie.listar());
     }
 
-    @PutMapping
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
-    public ResponseEntity<ChatDTO> Actualizar(@Valid @RequestBody ChatDTO chatDTO) {
-        return ResponseEntity.ok(chatServicie.modificar(chatDTO));
-    }
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
-    public void Eliminar(@PathVariable Long id) {
-        chatServicie.eliminar(id);
-    }
-
     @GetMapping("/conversacion/{idCliente}/{idAsesor}")
     @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public ResponseEntity<List<ChatDTO>> ListarPorClienteYAsesor(
