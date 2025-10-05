@@ -17,32 +17,26 @@ public class TarjetaController {
 
     @Autowired
     private ITarjetaService tarjetaServiceService;
-
     @PostMapping
-    @PreAuthorize("hasRole('CLIENTE')") //necesito cliente
+    @PreAuthorize("hasRole('CLIENTE')")
     public ResponseEntity<TarjetaDTO> insertar(@Valid @RequestBody TarjetaDTO tarjetaDTO) {
         return ResponseEntity.ok(tarjetaServiceService.insertarTarjeta(tarjetaDTO));
     }
-
-
     @PutMapping
     @PreAuthorize("hasRole('CLIENTE')")
     public ResponseEntity<TarjetaDTO> modificar(@Valid @RequestBody TarjetaDTO tarjetaDTO) {
         return ResponseEntity.ok(tarjetaServiceService.modificarTarjeta(tarjetaDTO));
     }
-
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('CLIENTE')")
     public void eliminar(@PathVariable Long id) {
         tarjetaServiceService.eliminarTarjeta(id);
     }
-
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('CLIENTE')")
     public ResponseEntity<TarjetaDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(tarjetaServiceService.buscarTarjetaPorId(id));
     }
-
     @GetMapping
     @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public ResponseEntity<List<TarjetaDTO>> listar() {
