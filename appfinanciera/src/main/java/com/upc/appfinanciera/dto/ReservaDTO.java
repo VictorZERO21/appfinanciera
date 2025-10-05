@@ -19,10 +19,8 @@ public class ReservaDTO {
     private Long idReserva;
     @NotNull(message = "La fecha y hora de inicio no pueden ser nulas")
     private LocalDateTime fechaHoraInicio;
-
     @NotNull(message = "La fecha y hora de fin no pueden ser nulas")
     private LocalDateTime fechaHoraFin;
-
     @NotNull(message = "El estado no puede ser nulo")
     @Size(min = 2, max = 50, message = "El estado debe tener entre 2 y 50 caracteres")
     private String estado;
