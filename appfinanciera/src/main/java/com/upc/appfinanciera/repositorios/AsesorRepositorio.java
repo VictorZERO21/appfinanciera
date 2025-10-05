@@ -11,11 +11,6 @@ import java.util.Optional;
 @Repository
 
 public interface AsesorRepositorio extends JpaRepository<AsesorFinanciero, Long> {
-    AsesorFinanciero findByDni(String dni);
-    AsesorFinanciero findByEmail(String email);
-    //List<AsesorFinanciero> findByEspecialidadContainingIgnoreCase(String especialidad);
-    List<AsesorFinanciero> findByNombreContainingIgnoreCase(String nombre);
-
     boolean existsByUser_IdUser(Long userIdUser);
     Optional<AsesorFinanciero> findByUser_IdUser(Long userIdUser);
 }
