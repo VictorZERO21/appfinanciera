@@ -6,10 +6,7 @@ import java.util.List;
 
 public interface IGestionFinancieraService {
     public GestionFinancieraDTO insertar(GestionFinancieraDTO gestionFinanciera);
-    public GestionFinancieraDTO actualizar(GestionFinancieraDTO gestionFinanciera);
-    public void eliminar(Long id);
     public List<GestionFinancieraDTO> buscarPorCliente(String dniCliente);
-    public List<GestionFinancieraDTO> buscarTodos();
     public List<Object[]> reportePorTipo(String tipo);
     public List<Object[]> reportePorFecha(LocalDate fecha);
 }
