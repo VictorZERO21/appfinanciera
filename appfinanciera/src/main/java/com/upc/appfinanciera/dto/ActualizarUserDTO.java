@@ -10,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ActualizarUserDTO {
-    public String email;        //
-    public String telefono;     //
-    public String sobreMi;      //
-    public String password;  //
+    public String email;       
+    public String telefono;    
+    public String sobreMi;     
+    public String password; 
 }
