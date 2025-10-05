@@ -27,12 +27,6 @@ public class AsesorFinancieroDTO {
     private String telefono;
     private String sobreMi;
 
-
-    //@Size(max = 50, message = "La especialidad no debe superar 50 caracteres")
-    //private String especialidad;
-//
-    //private String experiencia;
-//
     @Email(message = "El correo electrónico debe ser válido")
     private String email;
 }
