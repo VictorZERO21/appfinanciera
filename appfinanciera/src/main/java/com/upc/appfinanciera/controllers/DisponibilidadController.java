@@ -14,7 +14,6 @@ import java.util.List;
 @CrossOrigin(origins = "${ip.frontend}", allowCredentials = "true", exposedHeaders = "Authorization") //para cloud
 @RequestMapping("/api/disponibilidades")
 public class DisponibilidadController {
-
     @Autowired
     private DisponibilidadService disponibilidadService;
 
@@ -30,6 +29,7 @@ public class DisponibilidadController {
     public List<DisponibilidadDTO> buscarTodos() {
         return disponibilidadService.buscarTodos();
     }
+
 
     @GetMapping("/asesor/{idAsesor}")
     @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
