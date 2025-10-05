@@ -18,30 +18,23 @@ public class PerfilController {
 
     @Autowired
     private IUserService userService;
-
     @PostMapping("/registro")
     public ResponseEntity<PerfilDTO> insertar(@Valid @RequestBody PerfilDTO perfilDTO) {
         return ResponseEntity.ok(userService.registrarUser(perfilDTO));
     }
-
     @PutMapping("/{userId}")
     @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public ResponseEntity<PerfilDTO> modificar(@PathVariable Long userId, @RequestBody ActualizarUserDTO r) {
         return ResponseEntity.ok(userService.modificarUser(userId, r));
     }
-
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public void eliminar(@PathVariable Long id) {
         userService.eliminarUser(id);
     }
-
-
     @GetMapping
     @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public ResponseEntity<List<PerfilDTO>> listar() {
         return ResponseEntity.ok(userService.listarUsers());
     }
-
-
 }
