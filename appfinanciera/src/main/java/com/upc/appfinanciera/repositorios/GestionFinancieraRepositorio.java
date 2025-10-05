@@ -10,8 +10,7 @@ import java.util.List;
 @Repository
 
 public interface GestionFinancieraRepositorio extends JpaRepository<GestionFinanciera, Long> {
-    // Cambiar a la propiedad idCliente
-    public List<GestionFinanciera> findByClienteIdCliente(long idCliente);
+
     public List<GestionFinanciera> findByClienteDni(String dniCliente);
 
     @Query("""
