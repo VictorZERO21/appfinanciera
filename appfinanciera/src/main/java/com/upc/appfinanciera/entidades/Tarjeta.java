@@ -16,12 +16,9 @@ public class Tarjeta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTarjeta;
-
     private String nombreTarjeta;
     private String numeroTarjeta;
-
     private int mesExpiracion;
     private int anioExpiracion;
-
     private String cvc;
 }
