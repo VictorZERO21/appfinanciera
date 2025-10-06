@@ -17,17 +17,13 @@ public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReserva;
-
     private LocalDateTime fechaHoraInicio;
     private LocalDateTime fechaHoraFin;
-
     private String estado;
     private String modalidad;
-
     @ManyToOne
     @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")
     private Cliente cliente;
-
     @ManyToOne
     @JoinColumn(name = "idAsesor", referencedColumnName = "idAsesor")
     private AsesorFinanciero asesor;
@@ -36,4 +32,3 @@ public class Reserva {
     private Tarjeta tarjeta;
     private double montoTotal;
 }
-
