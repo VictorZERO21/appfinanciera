@@ -34,8 +34,8 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.listarClientes());
     }
 
-    @GetMapping("/by-username")
-    public ResponseEntity<ClienteDTO> obtenerPorUsername(@RequestParam String emaill) {
-        return ResponseEntity.ok(clienteService.findByEmail(emaill));
+    @GetMapping("/email/{email}")
+    public ResponseEntity<ClienteDTO> obtenerPorUsername(@PathVariable String email) {
+        return ResponseEntity.ok(clienteService.findByEmail(email));
     }
 }

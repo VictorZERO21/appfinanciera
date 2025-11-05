@@ -1,6 +1,7 @@
 package com.upc.appfinanciera.servicios;
 
 import com.upc.appfinanciera.dto.AsesorFinancieroDTO;
+import com.upc.appfinanciera.dto.ClienteDTO;
 import com.upc.appfinanciera.entidades.AsesorFinanciero;
 import com.upc.appfinanciera.excepciones.CustomExceptions;
 import com.upc.appfinanciera.excepciones.CustomExceptions.AsesorNotFoundException;
@@ -8,7 +9,9 @@ import com.upc.appfinanciera.interfaces.IAsesorService;
 import com.upc.appfinanciera.repositorios.AsesorRepositorio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,5 +43,13 @@ public class AsesorService implements IAsesorService {
         return asesores.stream()
                 .map(asesor -> modelMapper.map(asesor, AsesorFinancieroDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public AsesorFinancieroDTO findByEmail(String email) {
+        return asesorRepositorio.findByEmail(email)
+                .map(asesor -> modelMapper.map(asesor, AsesorFinancieroDTO.class))
+                .orElseThrow(() -> new CustomExceptions.AsesorNotFoundException(
+                        "Asesor con email " + email + " no encontrado"));
     }
 }

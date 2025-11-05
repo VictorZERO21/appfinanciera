@@ -30,4 +30,9 @@ public class AsesorController {
     public ResponseEntity<AsesorFinancieroDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(asesorService.buscarAsesorPorId(id));
     }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<AsesorFinancieroDTO> obtenerPorUsername(@PathVariable String email) {
+        return ResponseEntity.ok(asesorService.findByEmail(email));
+    }
 }
