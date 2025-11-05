@@ -27,11 +27,13 @@ public class GestionFinancieraController {
     public ResponseEntity<GestionFinancieraDTO> insertar(@RequestBody GestionFinancieraDTO gestionFinancieraDto) {
         return ResponseEntity.ok(gestionFinancieraService.insertar(gestionFinancieraDto));
     }
+
     @GetMapping("/listar/{id}")
     //@PreAuthorize("hasRole('CLIENTE')")
     public List<GestionFinancieraDTO> listarId(@PathVariable Long id) {
         return gestionFinancieraService.listarId(id);
     }
+
     @GetMapping("/listar")
     //@PreAuthorize("hasRole('CLIENTE')")
     public List<GestionFinancieraDTO> buscarPorCliente() {

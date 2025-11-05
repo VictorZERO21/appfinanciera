@@ -34,16 +34,16 @@ public class GestionFinancieraService implements IGestionFinancieraService {
         if (!tipo.equalsIgnoreCase("ingreso") && !tipo.equalsIgnoreCase("egreso")) {
             throw new CustomExceptions.ValidationException("El tipo solo puede ser 'ingreso' o 'egreso'");
         }
-        //Cliente cliente = clienteRepositorio.findById(gestionFinancieraDTO.getCliente().getIdCliente())
-          //      .orElseThrow(() -> new CustomExceptions.ClienteNotFoundException(
-            //            "Cliente no encontrado con ID: " + gestionFinancieraDTO.getCliente().getIdCliente()));
+        Cliente cliente = clienteRepositorio.findById(gestionFinancieraDTO.getCliente().getIdCliente())
+          .orElseThrow(() -> new CustomExceptions.ClienteNotFoundException(
+            "Cliente no encontrado con ID: " + gestionFinancieraDTO.getCliente().getIdCliente()));
 
         GestionFinanciera gestionFinanciera = new GestionFinanciera();
         gestionFinanciera.setTitulo(gestionFinancieraDTO.getTitulo());
         gestionFinanciera.setTipo(gestionFinancieraDTO.getTipo());
         gestionFinanciera.setMonto(gestionFinancieraDTO.getMonto());
         gestionFinanciera.setFecha(gestionFinancieraDTO.getFecha());
-        gestionFinanciera.setCliente(null);
+        gestionFinanciera.setCliente(cliente);
 
         GestionFinanciera guardado = gestionFinancieraRepositorio.save(gestionFinanciera);
         return modelMapper.map(guardado, GestionFinancieraDTO.class);

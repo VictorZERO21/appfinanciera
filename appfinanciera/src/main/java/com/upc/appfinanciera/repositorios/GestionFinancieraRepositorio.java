@@ -15,6 +15,7 @@ public interface GestionFinancieraRepositorio extends JpaRepository<GestionFinan
     List<GestionFinanciera> findAll();
     List<GestionFinanciera> findAllByIdGestion(Long idGestion);
 
+
     @Query("""
            SELECT g.titulo, COALESCE(SUM(g.monto),0)
            FROM GestionFinanciera g
