@@ -1,10 +1,11 @@
 package com.upc.appfinanciera.security.config;
 
 import com.upc.appfinanciera.security.filters.JwtRequestFilter;
-import com.upc.appfinanciera.security.services.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,68 +17,63 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    private final CustomUserDetailsService userDetailsService;
     private final JwtRequestFilter jwtRequestFilter;
 
-    //Inyectando JWT Filter por constructor
-    public SecurityConfig(CustomUserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter) {
-        this.userDetailsService = userDetailsService;
+    public SecurityConfig(JwtRequestFilter jwtRequestFilter) {
         this.jwtRequestFilter = jwtRequestFilter;
     }
 
-    //se define como un bean para que pueda ser utilizado en otros lugares, como en el controlador de autenticación
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-    // Bean para codificar las contraseñas para ser usando en cualquier parte de la app
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    //(2) Definir el SecurityFilterChain como un bean, ya no necesitamos heredar, configuramos toda la seg.
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+    // ✅ ÚNICA chain de seguridad
+    @Bean
+    public SecurityFilterChain security(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // deshabilitar CSRF ya que no es necesario para una API REST
+                .cors(Customizer.withDefaults())                 // habilita CORS con el bean de abajo
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/api/Login/registro","/api/authenticate", "api/rol", "/save/{user_id}/{rol_id}").permitAll() //aqui dejamos que todos autentiquen
-                                //.requestMatchers("/api/proveedores").hasRole("ADMIN")
-                                .anyRequest().authenticated() // cualquier endpoint puede ser llamado con tan solo autenticarse
-                        //.anyRequest().denyAll() // aquí se obliga a todos los endpoints usen @PreAuthorize
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // preflight
+                        .requestMatchers("/**").permitAll()                     // ✅ TODO permitido
+                        .anyRequest().permitAll()
                 )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                .formLogin(AbstractHttpConfigurer::disable)      // sin redirección 302 a /login
+                .httpBasic(AbstractHttpConfigurer::disable);
 
-        // Añadir el filtro JWT antes del filtro de autenticación
+        // JWT filter
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 
-    //Filter opcional si se desea configurar globalmente el acceso a los endpoints sin anotaciones
-    // en cada endpoint
-//    @Bean
-//    public CorsFilter corsFilter() {
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        CorsConfiguration config = new CorsConfiguration();
-//        config.setAllowCredentials(true);
-//        config.addAllowedOrigin("${ip.frontend}");
-//        config.addAllowedMethod("*");
-//        config.addExposedHeader("Authorization");
-//        source.registerCorsConfiguration("/**", config); //para todos los paths
-//        return new CorsFilter(source);
-//    }
-}
+    // ✅ ÚNICA config CORS (global)
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration c = new CorsConfiguration();
+        c.setAllowedOrigins(List.of("http://localhost:4200"));
+        c.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
+        c.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        c.setAllowCredentials(true);
 
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", c);
+        return source; // ✅ correcto —implementa CorsConfigurationSource
+    }
+
+
+}

@@ -4,17 +4,75 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00f4d8af-2752-4e9a-816a-4ef8bfd26c2f" name="Changes" comment="Security Implementada">
+    <list default="true" id="00f4d8af-2752-4e9a-816a-4ef8bfd26c2f" name="Changes" comment="Cambio en PerfilService">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/controllers/PerfilController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/controllers/PerfilController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/controllers/CalculadoraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/controllers/CalculadoraController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/controllers/GestionFinancieraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/controllers/GestionFinancieraController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/interfaces/IGestionFinancieraService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/interfaces/IGestionFinancieraService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/repositorios/GestionFinancieraRepositorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/repositorios/GestionFinancieraRepositorio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/security/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/security/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/security/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/security/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/servicios/CalculadoraService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/servicios/CalculadoraService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/servicios/GestionFinancieraService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/servicios/GestionFinancieraService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/servicios/PerfilService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/servicios/PerfilService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/AsesorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/AsesorController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/CalculadoraController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/CalculadoraController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/ClienteController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/ClienteController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/DisponibilidadController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/DisponibilidadController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/GestionFinancieraController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/GestionFinancieraController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/PagoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/PagoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/PagoController.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/PerfilController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/PerfilController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/ReservaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/ReservaController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/AsesorFinancieroDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/AsesorFinancieroDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/CalculadoraDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/CalculadoraDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/ClienteDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/ClienteDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/DisponibilidadDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/DisponibilidadDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/GestionFinancieraDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/GestionFinancieraDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/PagoDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/PerfilDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/PerfilDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/ReservaDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/ReservaDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/AsesorFinanciero.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/AsesorFinanciero.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/Cliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/Cliente.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/Disponibilidad.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/Disponibilidad.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/GestionFinanciera.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/GestionFinanciera.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/Pago.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/Reserva.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/entidades/Reserva.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/excepciones/CustomExceptions$AsesorNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/excepciones/CustomExceptions$AsesorNotFoundException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/excepciones/CustomExceptions$CalculadoraException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/excepciones/CustomExceptions$ClienteNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/excepciones/CustomExceptions$ClienteNotFoundException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/excepciones/CustomExceptions$ConsejoNotFoundException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/excepciones/CustomExceptions$GestionFinancieraNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/excepciones/CustomExceptions$GestionFinancieraNotFoundException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/excepciones/CustomExceptions$ReservaNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/excepciones/CustomExceptions$ReservaNotFoundException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/excepciones/CustomExceptions.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/excepciones/CustomExceptions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/interfaces/IAsesorService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/interfaces/IAsesorService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/interfaces/IClienteService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/interfaces/IClienteService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/interfaces/IDisponibilidadService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/interfaces/IDisponibilidadService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/interfaces/IGestionFinancieraService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/interfaces/IGestionFinancieraService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/interfaces/IPagoService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/interfaces/IReservaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/interfaces/IReservaService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/AsesorRepositorio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/AsesorRepositorio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/ClienteRepositorio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/ClienteRepositorio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/DisponibilidadRepositorio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/DisponibilidadRepositorio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/GestionFinancieraRepositorio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/GestionFinancieraRepositorio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/PagoRepositorio.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/ReservaRepositorio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/ReservaRepositorio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/security/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/security/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/security/controllers/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/security/controllers/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/AsesorService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/AsesorService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/CalculadoraService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/CalculadoraService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/ClienteService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/ClienteService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/DisponibilidadService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/DisponibilidadService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/GestionFinancieraService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/GestionFinancieraService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/PagoService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/PerfilService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/PerfilService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/ReservaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/ReservaService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/upc/appfinanciera/AppfinancieraApplicationTests.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +102,9 @@
     &quot;accountId&quot;: &quot;01d8bbe3-5fa5-48bc-949e-7cbb069d6f2a&quot;
   }
 }</component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -57,6 +118,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Maven.appfinanciera [install].executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
@@ -65,6 +127,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Spring Boot.AppfinancieraApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -126,7 +189,18 @@
       <workItem from="1758686582918" duration="10000" />
       <workItem from="1759162362990" duration="10108000" />
       <workItem from="1759203318860" duration="4082000" />
-      <workItem from="1759255600303" duration="15691000" />
+      <workItem from="1759255600303" duration="17052000" />
+      <workItem from="1759347276424" duration="52000" />
+      <workItem from="1759867286514" duration="104000" />
+      <workItem from="1759896169587" duration="3529000" />
+      <workItem from="1759925169388" duration="598000" />
+      <workItem from="1760288567344" duration="98000" />
+      <workItem from="1761343767526" duration="688000" />
+      <workItem from="1761747601303" duration="10000" />
+      <workItem from="1762202232216" duration="5777000" />
+      <workItem from="1762259902745" duration="5282000" />
+      <workItem from="1762296984336" duration="14797000" />
+      <workItem from="1762348731827" duration="7000" />
     </task>
     <task id="LOCAL-00001" summary="Reportes">
       <option name="closed" value="true" />
@@ -184,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759281276411</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Cambio en PerfilService">
+      <option name="closed" value="true" />
+      <created>1759282238835</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1759282238835</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,6 +279,7 @@
     <MESSAGE value="Cambio en asesor y cliente" />
     <MESSAGE value="Cambio en application.properties" />
     <MESSAGE value="Security Implementada" />
-    <option name="LAST_COMMIT_MESSAGE" value="Security Implementada" />
+    <MESSAGE value="Cambio en PerfilService" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cambio en PerfilService" />
   </component>
 </project>

@@ -44,7 +44,7 @@ public class PerfilService implements IUserService {
         var secUser = new com.upc.appfinanciera.security.entities.User();
         // usar email como username para login es común y práctico
         secUser.setUsername(perfilDTO.getEmail());
-        secUser.setPassword(passwordEncoder.encode(perfilDTO.getPassword())); // SIEMPRE encriptar
+        //secUser.setPassword(passwordEncoder.encode(perfilDTO.getPassword())); // SIEMPRE encriptar
 
         String roleName = "ROLE_" + perfilDTO.getRol().name(); // "ROLE_CLIENTE" o "ROLE_ASESOR"
         var role = roleRepository.findByName(roleName)

@@ -1,5 +1,6 @@
 package com.upc.appfinanciera.repositorios;
 
+import com.upc.appfinanciera.entidades.CalificacionAsesor;
 import com.upc.appfinanciera.entidades.GestionFinanciera;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +12,8 @@ import java.util.List;
 
 public interface GestionFinancieraRepositorio extends JpaRepository<GestionFinanciera, Long> {
 
-    public List<GestionFinanciera> findByClienteDni(String dniCliente);
+    List<GestionFinanciera> findAll();
+    List<GestionFinanciera> findAllByIdGestion(Long idGestion);
 
     @Query("""
            SELECT g.titulo, COALESCE(SUM(g.monto),0)

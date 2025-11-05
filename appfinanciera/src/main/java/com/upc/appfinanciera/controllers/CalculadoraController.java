@@ -14,10 +14,10 @@ public class CalculadoraController {
     private CalculadoraService calculadoraService;
 
     @GetMapping("/calcular/{monto}/{cuotas}/{tasainteres}")
-    @PreAuthorize("hasRole('CLIENTE')") //necesito cliente
-    public String calcular(@PathVariable long monto,
-                           @PathVariable long cuotas,
-                           @PathVariable long tasainteres) {
+    //@PreAuthorize("hasRole('CLIENTE')") //necesito cliente
+    public CalculadoraService.Resultado calcular(@PathVariable long monto,
+                                                 @PathVariable long cuotas,
+                                                 @PathVariable long tasainteres) {
         return calculadoraService.calcular(monto, cuotas, tasainteres);
     }
 }
