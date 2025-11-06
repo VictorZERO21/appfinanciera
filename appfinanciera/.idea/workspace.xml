@@ -6,16 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="00f4d8af-2752-4e9a-816a-4ef8bfd26c2f" name="Changes" comment="Cambio en PerfilService">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/controllers/PerfilController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/controllers/PerfilController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/dto/PerfilDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/dto/PerfilDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/interfaces/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/interfaces/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/repositorios/PerfilRepositorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/repositorios/PerfilRepositorio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/security/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/security/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/security/dtos/AuthResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/security/dtos/AuthResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/repositorios/GestionFinancieraRepositorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/repositorios/GestionFinancieraRepositorio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/servicios/GestionFinancieraService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/servicios/GestionFinancieraService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/servicios/PerfilService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/upc/appfinanciera/servicios/PerfilService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/PerfilController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/controllers/PerfilController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/PerfilDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/dto/PerfilDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/security/controllers/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/security/controllers/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/GestionFinancieraRepositorio.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/repositorios/GestionFinancieraRepositorio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/GestionFinancieraService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/GestionFinancieraService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/PerfilService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/upc/appfinanciera/servicios/PerfilService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -145,7 +140,7 @@
       <workItem from="1762259902745" duration="5282000" />
       <workItem from="1762296984336" duration="14797000" />
       <workItem from="1762348731827" duration="7000" />
-      <workItem from="1762352077610" duration="24878000" />
+      <workItem from="1762352077610" duration="27021000" />
     </task>
     <task id="LOCAL-00001" summary="Reportes">
       <option name="closed" value="true" />

@@ -51,14 +51,14 @@ public class GestionFinancieraService implements IGestionFinancieraService {
 
     @Override
     public List<GestionFinancieraDTO> listarId(Long id) {
-        if (!gestionFinancieraRepositorio.existsById(id)) {
+        if (!clienteRepositorio.existsById(id)) {
             throw new CustomExceptions.AsesorNotFoundException("Gestion no encontrado con ID: " + id);
         }
 
-        List<GestionFinanciera> gestionFinancieras = gestionFinancieraRepositorio.findAllByIdGestion(id);
+        List<GestionFinanciera> gestionFinancieras = gestionFinancieraRepositorio.findByCliente_IdCliente(id);
         if (gestionFinancieras.isEmpty()) {
             throw new CustomExceptions.ValidationException(
-                    "La gestion con ID " + id + " aún no tiene calificaciones registradas.");
+                    "La gestion con ID " + id + " aún no tiene gestiones registradas.");
         }
 
         return gestionFinancieras.stream()

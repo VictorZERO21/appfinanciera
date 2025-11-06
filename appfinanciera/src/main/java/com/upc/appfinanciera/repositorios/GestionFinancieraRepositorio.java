@@ -13,7 +13,8 @@ import java.util.List;
 public interface GestionFinancieraRepositorio extends JpaRepository<GestionFinanciera, Long> {
 
     List<GestionFinanciera> findAll();
-    List<GestionFinanciera> findAllByIdGestion(Long idGestion);
+
+    List<GestionFinanciera> findByCliente_IdCliente(Long clienteIdCliente);
 
 
     @Query("""

@@ -212,7 +212,7 @@ public class PerfilService implements IUserService {
 
     @Override
     public PerfilDTO findByEmail(String email) {
-        return clienteRepositorio.findByEmail(email)
+        return perfilRepositorio.findByEmail(email)
                 .map(perfil -> modelMapper.map(perfil, PerfilDTO.class))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Perfil no encontrado"));
     }
