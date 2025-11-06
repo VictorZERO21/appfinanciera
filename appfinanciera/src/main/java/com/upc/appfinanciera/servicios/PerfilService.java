@@ -5,6 +5,7 @@ import com.upc.appfinanciera.dto.PerfilDTO;
 import com.upc.appfinanciera.entidades.AsesorFinanciero;
 import com.upc.appfinanciera.entidades.Cliente;
 import com.upc.appfinanciera.entidades.Perfil;
+import com.upc.appfinanciera.excepciones.CustomExceptions;
 import com.upc.appfinanciera.interfaces.IUserService;
 import com.upc.appfinanciera.repositorios.AsesorRepositorio;
 import com.upc.appfinanciera.repositorios.ClienteRepositorio;
@@ -12,7 +13,9 @@ import com.upc.appfinanciera.repositorios.PerfilRepositorio;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,11 +58,10 @@ public class PerfilService implements IUserService {
 
 
         Perfil user = modelMapper.map(perfilDTO, Perfil.class);
-        user.setTelefono(null);
         if (user.getSobreMi() == null) {
             user.setSobreMi("Completa tu perfil para personalizar tu experiencia.");
         }
-
+        user.setSecurityUser(secUser);
         user = perfilRepositorio.save(user);
 
         //cliente
@@ -95,7 +97,7 @@ public class PerfilService implements IUserService {
     @Transactional
     @Override
     public PerfilDTO modificarUser(Long userId, ActualizarUserDTO r) {
-        Perfil u = perfilRepositorio.findById(userId)
+        Perfil u = perfilRepositorio.findBySecurityUser_Id(userId)
                 .orElseThrow(() -> new RuntimeException("User no encontrado con ID: " + userId));
 
         // Email: solo si viene y cambia, valida unicidad en otros usuarios
@@ -200,4 +202,26 @@ public class PerfilService implements IUserService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public PerfilDTO buscarporid(Long id) {
+        return perfilRepositorio.findById(id)
+                .map(perfil -> modelMapper.map(perfil, PerfilDTO.class))
+                .orElseThrow(() -> new CustomExceptions.ClienteNotFoundException(
+                        "Perfil con ID " + id + " no encontrado"));
+    }
+
+    @Override
+    public PerfilDTO findByEmail(String email) {
+        return clienteRepositorio.findByEmail(email)
+                .map(perfil -> modelMapper.map(perfil, PerfilDTO.class))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Perfil no encontrado"));
+    }
+
+    @Override
+    public PerfilDTO findBySecurityUser_Id(Long securityUserId) {
+        return perfilRepositorio.findBySecurityUser_Id(securityUserId)
+                .map(perfil -> modelMapper.map(perfil, PerfilDTO.class))
+                .orElseThrow(() -> new CustomExceptions.ClienteNotFoundException(
+                        "Perfil con ID " + securityUserId + " no encontrado"));
+    }
 }

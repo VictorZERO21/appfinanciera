@@ -3,7 +3,9 @@ package com.upc.appfinanciera.security.controllers;
 import com.upc.appfinanciera.security.dtos.AuthRequestDTO;
 import com.upc.appfinanciera.security.dtos.AuthResponseDTO;
 import com.upc.appfinanciera.security.services.CustomUserDetailsService;
+import com.upc.appfinanciera.security.services.UserService;
 import com.upc.appfinanciera.security.util.JwtUtil;
+import com.upc.appfinanciera.servicios.PerfilService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import com.upc.appfinanciera.servicios.PerfilService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,10 +32,14 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService userDetailsService;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, CustomUserDetailsService userDetailsService) {
+    //
+    private final PerfilService perfilService;
+
+    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, CustomUserDetailsService userDetailsService, PerfilService perfilService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
+        this.perfilService = perfilService;
     }
 
     @PostMapping("/authenticate")
@@ -43,6 +50,8 @@ public class AuthController {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
         final String token = jwtUtil.generateToken(userDetails);
+        var perfil = perfilService.findByEmail(authRequest.getUsername());
+        Long userId = perfil.getSecurityUser().getId(); // o perfil.getUserId() según tu modelo
 
         Set<String> roles = userDetails.getAuthorities()
                 .stream()
@@ -54,6 +63,7 @@ public class AuthController {
         AuthResponseDTO authResponseDTO = new AuthResponseDTO();
         authResponseDTO.setRoles(roles);
         authResponseDTO.setJwt(token);
+        authResponseDTO.setUserId(userId);
         return ResponseEntity.ok().headers(responseHeaders).body(authResponseDTO);
     }
 

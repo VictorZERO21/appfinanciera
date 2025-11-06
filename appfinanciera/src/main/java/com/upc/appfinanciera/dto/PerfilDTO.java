@@ -18,5 +18,6 @@ public class PerfilDTO {
     private String password;
     private String telefono;
     private String sobreMi;
-    private Perfil.Rol rol; 
+    private Perfil.Rol rol;
+    private com.upc.appfinanciera.security.entities.User securityUser;
 }
