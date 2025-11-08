@@ -111,5 +111,20 @@ public class ChatService implements IChatServicie {
                 .map(this::entityDTO)
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<ChatDTO> listarPorCliente(Long idCliente) {
+    if (!clienteRepositorio.existsById(idCliente)) {
+        throw new CustomExceptions.ClienteNotFoundException("Cliente no encontrado con ID: " + idCliente);
+    }
 
+    List<Chat> chats = chatRepositorio.findByCliente_IdCliente(idCliente);
+
+    if (chats.isEmpty()) {
+        throw new CustomExceptions.ValidationException("El cliente no tiene conversaciones aún.");
+    }
+
+    return chats.stream()
+            .map(this::entityDTO)
+            .collect(Collectors.toList());
+    }
 }
