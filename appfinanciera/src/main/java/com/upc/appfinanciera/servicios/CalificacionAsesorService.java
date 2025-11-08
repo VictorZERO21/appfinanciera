@@ -38,7 +38,7 @@ public class CalificacionAsesorService implements ICalificacionAsesorService {
 
     @Override
     public CalificacionAsesorDTO insertar(CalificacionAsesorDTO dto) {
-        Reserva ultimaReserva = reservaRepositorio
+       /* Reserva ultimaReserva = reservaRepositorio
                 .findTopByCliente_IdClienteAndAsesor_IdAsesorOrderByFechaHoraFinDesc(dto.getIdCliente(), dto.getIdAsesor())
                 .orElseThrow(() -> new CustomExceptions.ReservaNotFoundException(
                         "No tienes reservas registradas con este asesor."));
@@ -46,7 +46,7 @@ public class CalificacionAsesorService implements ICalificacionAsesorService {
         if (ultimaReserva.getFechaHoraFin().isAfter(LocalDateTime.now())) {
             throw new CustomExceptions.ValidationException(
                     "Solo puedes calificar después de que la reserva haya terminado.");
-        }
+        }*/
 
         AsesorFinanciero asesor = asesorRepositorio.findById(dto.getIdAsesor())
                 .orElseThrow(() -> new CustomExceptions.AsesorNotFoundException(
