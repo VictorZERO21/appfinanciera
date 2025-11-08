@@ -10,5 +10,7 @@ public interface IChatServicie {
     List<ChatDTO> listar();
     List<ChatDTO> listarPorClienteYAsesor(Long idCliente, Long idAsesor);
     List<ChatDTO> listarPorAsesor(Long idAsesor);
+    List<ChatDTO> listarPorCliente(Long idCliente);
+
 
 }
