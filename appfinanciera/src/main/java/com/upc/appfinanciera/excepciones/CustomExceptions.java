@@ -42,4 +42,9 @@ public class CustomExceptions {
             super(message);
         }
     }
+    public static class NoDataAvailableException extends RuntimeException {
+        public NoDataAvailableException(String message) {
+            super(message);
+        }
+    }
 }
