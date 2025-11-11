@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(CustomExceptions.NoDataAvailableException.class)
+    public ResponseEntity<Object> handleNoData(CustomExceptions.NoDataAvailableException ex) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     @ExceptionHandler({
             CustomExceptions.AsesorNotFoundException.class,
             CustomExceptions.ClienteNotFoundException.class,
