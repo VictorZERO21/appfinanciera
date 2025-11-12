@@ -15,13 +15,13 @@ public class CalificacionAsesorController {
     @Autowired
     private ICalificacionAsesorService calificacionService;
     @PostMapping
-    //@PreAuthorize("hasRole('CLIENTE')")
+    @PreAuthorize("hasRole('CLIENTE')")
     public CalificacionAsesorDTO insertar(@Valid @RequestBody CalificacionAsesorDTO dto) {
         return calificacionService.insertar(dto);
     }
 
     @GetMapping("/asesor/{idAsesor}")
-    //@PreAuthorize("hasRole('CLIENTE')")
+    @PreAuthorize("hasRole('CLIENTE')")
     public List<CalificacionAsesorDTO> listarPorAsesor(@PathVariable Long idAsesor) {
         return calificacionService.listarPorAsesor(idAsesor);
     }

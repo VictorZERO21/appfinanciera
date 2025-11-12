@@ -23,13 +23,13 @@ public class ClienteController {
     private IClienteService clienteService;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
+    //@PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public ResponseEntity<ClienteDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.buscarClientePorId(id));
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
+    //@PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public ResponseEntity<List<ClienteDTO>> listar() {
         return ResponseEntity.ok(clienteService.listarClientes());
     }
