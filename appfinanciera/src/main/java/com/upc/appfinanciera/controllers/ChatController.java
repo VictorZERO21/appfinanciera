@@ -19,19 +19,19 @@ public class ChatController {
 
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
+    //@PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public ResponseEntity<ChatDTO> Insertar(@Valid @RequestBody ChatDTO chatDTO ) {
         return ResponseEntity.ok(chatServicie.insertar(chatDTO));
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
+    //@PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public ResponseEntity<List<ChatDTO>> Listar() {
         return ResponseEntity.ok(chatServicie.listar());
     }
 
     @GetMapping("/conversacion/{idCliente}/{idAsesor}")
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
+    //@PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public ResponseEntity<List<ChatDTO>> ListarPorClienteYAsesor(
             @PathVariable Long idCliente,
             @PathVariable Long idAsesor) {
@@ -39,12 +39,12 @@ public class ChatController {
     }
 
     @GetMapping("/asesor/{idAsesor}")
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
+    //@PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public List<ChatDTO> ListarClientesPorAsesor(@PathVariable Long idAsesor) {
         return chatServicie.listarPorAsesor(idAsesor);
     }
     @GetMapping("/cliente/{idCliente}")
-    @PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
+    //@PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
     public ResponseEntity<List<ChatDTO>> listarPorCliente(@PathVariable Long idCliente) {
     return ResponseEntity.ok(chatServicie.listarPorCliente(idCliente));
 }
