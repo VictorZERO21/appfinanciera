@@ -8,30 +8,30 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Setter
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idChat;
+
     @ManyToOne
     @JoinColumn(name = "idCliente", nullable = false)
     private Cliente cliente;
+
     @ManyToOne
     @JoinColumn(name = "idAsesor", nullable = false)
     private AsesorFinanciero asesor;
-    @Column(nullable = false, length = 750)
-    private String comentario;
-    @Column(nullable = false)
-    private LocalDateTime fechaHora;
-    @PrePersist
-    public void asignarFechaHora()
-    {
-        this.fechaHora = LocalDateTime.now();
-    }
 
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Mensaje> mensajes = new ArrayList<>();
+
+    @Column(nullable = false)
+    private LocalDateTime fechaHora = LocalDateTime.now();
 }
