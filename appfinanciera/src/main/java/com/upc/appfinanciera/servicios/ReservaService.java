@@ -212,4 +212,19 @@ public class ReservaService implements IReservaService {
                 .map(reserva -> modelMapper.map(reserva, ReservaDTO.class))
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<ClienteDTO> listarClientesConReservas() {
+        return reservaRepositorio.findAll().stream()
+                .map(Reserva::getCliente)
+                .collect(Collectors.toMap(
+                        Cliente::getIdCliente,
+                        c -> c,
+                        (c1, c2) -> c1
+                ))
+                .values()
+                .stream()
+                .map(cliente -> modelMapper.map(cliente, ClienteDTO.class))
+                .collect(Collectors.toList());
+    }
 }
+
