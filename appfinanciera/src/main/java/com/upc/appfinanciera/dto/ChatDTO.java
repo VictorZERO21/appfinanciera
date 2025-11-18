@@ -7,14 +7,13 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Setter
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ChatDTO {
     private Long idChat;
     private ClienteDTO cliente;
     private AsesorFinancieroDTO asesor;
-    private String comentario;
     private LocalDateTime fechaHora;
 }
