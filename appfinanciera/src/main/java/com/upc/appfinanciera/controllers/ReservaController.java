@@ -1,6 +1,7 @@
 package com.upc.appfinanciera.controllers;
 
 import com.upc.appfinanciera.dto.ReservaDTO;
+import com.upc.appfinanciera.dto.ClienteDTO;
 import com.upc.appfinanciera.interfaces.IReservaService;
 import com.upc.appfinanciera.servicios.ReservaService;
 import jakarta.validation.Valid;
@@ -61,4 +62,5 @@ public class ReservaController {
         return ResponseEntity.ok(reservaService.listarClientesConReservas());
     }
 }
+
 
