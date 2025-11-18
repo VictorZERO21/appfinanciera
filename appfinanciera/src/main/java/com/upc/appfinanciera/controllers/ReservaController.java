@@ -54,4 +54,11 @@ public class ReservaController {
     public ResponseEntity<List<ReservaDTO>> listarPorAsesorId(@PathVariable Long idAsesor) {
         return ResponseEntity.ok(reservaService.listarReservasPorAsesorId(idAsesor));
     }
+   
+   @GetMapping("/clientes/reservados")
+    //@PreAuthorize("hasAnyRole('CLIENTE','ASESOR')")
+    public ResponseEntity<List<ClienteDTO>> listarClientesConReservas() {
+        return ResponseEntity.ok(reservaService.listarClientesConReservas());
+    }
 }
+
