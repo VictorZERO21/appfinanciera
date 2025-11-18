@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +34,12 @@ public class ReservaService implements IReservaService {
     private AsesorRepositorio asesorRepositorio;
 
     @Autowired
+    private ChatRepositorio chatRepositorio;
+
+    @Autowired
+    private MensajeRepositorio mensajeRepositorio;
+
+    @Autowired
     private ModelMapper modelMapper;
 
 
@@ -50,13 +57,12 @@ public class ReservaService implements IReservaService {
                 .findByAsesorFinanciero_IdAsesorAndFechaAndHoraInicioAndHoraFin(
                         idAsesor, fechaReserva, horaInicio, horaFin
                 )
-                .orElseThrow(() -> new CustomExceptions.DisponibilidadNotFoundException("El asesor con ID " + idAsesor +
-                        " no tiene disponibilidad registrada en " + fechaReserva +
-                        " de " + horaInicio + " a " + horaFin));
+                .orElseThrow(() -> new CustomExceptions.DisponibilidadNotFoundException(
+                        "El asesor con ID " + idAsesor + " no tiene disponibilidad registrada en " + fechaReserva +
+                                " de " + horaInicio + " a " + horaFin));
 
         if (!disponibilidad.isDisponible()) {
-            throw new CustomExceptions.ValidationException(
-                    "El asesor está ocupado en ese horario");
+            throw new CustomExceptions.ValidationException("El asesor está ocupado en ese horario");
         }
         
         boolean existeChoque = reservaRepositorio
@@ -86,10 +92,28 @@ public class ReservaService implements IReservaService {
         
         disponibilidad.setDisponible(false);
         disponibilidadRepositorio.save(disponibilidad);
+        
+        chatRepositorio.findByCliente_IdClienteAndAsesor_IdAsesor(idCliente, idAsesor)
+                .stream()
+                .findFirst()
+                .or(() -> {
+                    Chat nuevoChat = new Chat();
+                    nuevoChat.setCliente(cliente);
+                    nuevoChat.setAsesor(asesor);
+                    chatRepositorio.save(nuevoChat);
+                    
+                    Mensaje mensajeInicial = new Mensaje();
+                    mensajeInicial.setChat(nuevoChat);
+                    mensajeInicial.setContenido("👋 Hola, esta conversación se creó con tu primera reserva con el asesor.");
+                    mensajeInicial.setEmisor("SISTEMA");
+                    mensajeRepositorio.save(mensajeInicial);
 
+                    return java.util.Optional.of(nuevoChat);
+                });
+        
         return modelMapper.map(guardado, ReservaDTO.class);
     }
-    
+
     @Override
     public ReservaDTO modificarReserva(ReservaDTO reservaDTO) {
         Reserva existente = reservaRepositorio.findById(reservaDTO.getIdReserva())
@@ -137,7 +161,7 @@ public class ReservaService implements IReservaService {
         Reserva actualizado = reservaRepositorio.save(existente);
         return modelMapper.map(actualizado, ReservaDTO.class);
     }
-    
+
     @Override
     public void eliminarReserva(Long id) {
         Reserva reserva = reservaRepositorio.findById(id)
@@ -160,7 +184,7 @@ public class ReservaService implements IReservaService {
 
         reservaRepositorio.deleteById(id);
     }
-    
+
     @Override
     public ReservaDTO buscarReservaPorId(Long id) {
         return reservaRepositorio.findById(id)
