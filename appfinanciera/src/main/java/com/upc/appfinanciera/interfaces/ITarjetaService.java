@@ -9,4 +9,7 @@ public interface ITarjetaService {
     void eliminarTarjeta(Long id);
     TarjetaDTO buscarTarjetaPorId(Long id);
     List<TarjetaDTO> listarTarjetas();
+
+
+    List<TarjetaDTO> listarPorCliente(Long idCliente);
 }
