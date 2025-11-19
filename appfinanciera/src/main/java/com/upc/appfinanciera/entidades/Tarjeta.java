@@ -21,4 +21,6 @@ public class Tarjeta {
     private int mesExpiracion;
     private int anioExpiracion;
     private String cvc;
+    @Column(name = "id_cliente", nullable = false)
+    private Long idCliente;
 }
