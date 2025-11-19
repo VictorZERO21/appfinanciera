@@ -22,4 +22,7 @@ public class TarjetaDTO {
     @NotBlank(message = "El CVC no puede estar vacío")
     @Pattern(regexp = "\\d{3,4}", message = "El CVC debe tener 3 o 4 dígitos")
     private String cvc;
+
+    @NotNull(message = "El ID del cliente es obligatorio")
+    private Long idCliente;
 }
