@@ -61,4 +61,12 @@ public class TarjetaService implements ITarjetaService {
                 .map(tarjeta -> modelMapper.map(tarjeta, TarjetaDTO.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<TarjetaDTO> listarPorCliente(Long idCliente) {
+
+        return tarjetaRepositorio.findByIdCliente(idCliente).stream()
+                .map(tarjeta -> modelMapper.map(tarjeta, TarjetaDTO.class))
+                .collect(Collectors.toList());
+    }
 }
