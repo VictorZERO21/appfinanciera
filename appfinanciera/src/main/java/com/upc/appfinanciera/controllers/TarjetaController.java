@@ -42,4 +42,11 @@ public class TarjetaController {
     public ResponseEntity<List<TarjetaDTO>> listar() {
         return ResponseEntity.ok(tarjetaServiceService.listarTarjetas());
     }
+
+
+    @GetMapping("/cliente/{idCliente}")
+    @PreAuthorize("hasRole('CLIENTE')")
+    public ResponseEntity<List<TarjetaDTO>> listarPorCliente(@PathVariable Long idCliente) {
+        return ResponseEntity.ok(tarjetaServiceService.listarPorCliente(idCliente));
+    }
 }
