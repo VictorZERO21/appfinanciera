@@ -10,13 +10,19 @@ import com.upc.appfinanciera.interfaces.IUserService;
 import com.upc.appfinanciera.repositorios.AsesorRepositorio;
 import com.upc.appfinanciera.repositorios.ClienteRepositorio;
 import com.upc.appfinanciera.repositorios.PerfilRepositorio;
+import io.jsonwebtoken.io.IOException;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -107,6 +113,7 @@ public class PerfilService implements IUserService {
             }
             u.setEmail(r.getEmail());
         }
+        if (r.getNombres() != null)  u.setNombres(r.getNombres());
         if (r.getTelefono() != null)  u.setTelefono(r.getTelefono());
         if (r.getSobreMi() != null)   u.setSobreMi(r.getSobreMi());
         if (r.getPassword() != null)  u.setPassword(r.getPassword());
@@ -145,6 +152,7 @@ public class PerfilService implements IUserService {
             if (r.getEmail() != null) {
                 asesor.setEmail(r.getEmail());
             }
+            if (r.getNombres() != null) asesor.setNombre(r.getNombres());
             if (r.getTelefono() != null) asesor.setTelefono(r.getTelefono());
             if (r.getSobreMi() != null)  asesor.setSobreMi(r.getSobreMi());
             if(r.getPassword() != null) asesor.setPassword(r.getPassword());
@@ -155,6 +163,7 @@ public class PerfilService implements IUserService {
             if (r.getEmail() != null) {
                 cliente.setEmail(r.getEmail());
             }
+            if (r.getNombres() != null) cliente.setNombre(r.getNombres());
             if (r.getTelefono() != null) cliente.setTelefono(r.getTelefono());
             if (r.getSobreMi() != null)  cliente.setSobreMi(r.getSobreMi());
             if(r.getPassword() != null) cliente.setPassword(r.getPassword());
@@ -224,4 +233,6 @@ public class PerfilService implements IUserService {
                 .orElseThrow(() -> new CustomExceptions.ClienteNotFoundException(
                         "Perfil con ID " + securityUserId + " no encontrado"));
     }
+
+
 }
