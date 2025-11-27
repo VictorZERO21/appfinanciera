@@ -13,7 +13,8 @@ public interface IReservaService {
     List<ReservaDTO> listarReservas();
     List<ReservaDTO> listarReservasPorClienteId(Long idCliente);
     List<ReservaDTO> listarReservasPorAsesorId(Long idAsesor);
-    List<ClienteDTO> listarClientesConReservas();
+    List<ClienteDTO> listarClientesPorAsesor(Long idAsesor);
 }
+
 
 
