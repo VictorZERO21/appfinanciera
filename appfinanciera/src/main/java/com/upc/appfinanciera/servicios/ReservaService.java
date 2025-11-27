@@ -214,13 +214,13 @@ public class ReservaService implements IReservaService {
                 .collect(Collectors.toList());
     }
     @Override
-    public List<ClienteDTO> listarClientesConReservas() {
-        return reservaRepositorio.findAll().stream()
-                .map(Reserva::getCliente)
+    public List<ClienteDTO> listarClientesPorAsesor(Long idAsesor) {
+        return reservaRepositorio.findByAsesor_IdAsesor(idAsesor).stream()
+                .map(Reserva::getCliente) // Obtener cliente desde la reserva
                 .collect(Collectors.toMap(
                         Cliente::getIdCliente,
                         c -> c,
-                        (c1, c2) -> c1
+                        (c1, c2) -> c1 // evitar duplicates
                 ))
                 .values()
                 .stream()
@@ -228,5 +228,6 @@ public class ReservaService implements IReservaService {
                 .collect(Collectors.toList());
     }
 }
+
 
 
